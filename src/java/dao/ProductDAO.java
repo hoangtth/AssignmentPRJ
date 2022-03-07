@@ -1,4 +1,4 @@
-
+ 
 
 package dao;
 
@@ -29,7 +29,7 @@ public class ProductDAO {
                     + ") AS X\n"
                     + "WHERE RN > ?*?-?\n"
                     + "AND RN <= ?*?-?";
-
+            
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             ps.setInt(1, pageIndex);
