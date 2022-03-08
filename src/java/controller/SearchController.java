@@ -36,10 +36,25 @@ public class SearchController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String keyword = request.getParameter("keyword");
-            List<Product> listProduct = new ProductDAO().search(keyword);
             
+            int pageIndex = 1;
+            final int PAGE_SIZE = 6;
+            
+            String raw_page = request.getParameter("pageIndex");
+            if(raw_page!=null){
+                pageIndex = Integer.parseInt(raw_page);
+            }
+            
+            ProductDAO productDAO = new ProductDAO();
+            
+            List<Product> listProduct = productDAO.SearchAndPaging(keyword,pageIndex, PAGE_SIZE);
+            int totalPage = productDAO.countPageWhenSearch(keyword,PAGE_SIZE);
+
+            request.setAttribute("keyword", keyword);
             request.setAttribute("listProduct", listProduct);
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+            request.setAttribute("totalPage", totalPage);
+            request.setAttribute("pageIndex", pageIndex);
+            request.getRequestDispatcher("search.jsp").forward(request, response);
         }
     }
 

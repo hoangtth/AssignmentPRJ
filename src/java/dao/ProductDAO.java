@@ -1,5 +1,3 @@
- 
-
 package dao;
 
 import context.DBContext;
@@ -29,7 +27,7 @@ public class ProductDAO {
                     + ") AS X\n"
                     + "WHERE RN > ?*?-?\n"
                     + "AND RN <= ?*?-?";
-            
+
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             ps.setInt(1, pageIndex);
@@ -182,12 +180,12 @@ public class ProductDAO {
     }
 
     public List<Product> search(String keyword) {
-         try {
+        try {
             String query = "select * from Product where name like ?";
 
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
-            ps.setString(1, "%"+keyword + "%");
+            ps.setString(1, "%" + keyword + "%");
             rs = ps.executeQuery();
 
             List<Product> list = new ArrayList<>();
@@ -211,5 +209,70 @@ public class ProductDAO {
             ex.printStackTrace(System.out);
         }
         return null;
+    }
+
+    public List<Product> SearchAndPaging(String keyword, int pageIndex, int pageSize) {
+        try {
+            String query = "SELECT * FROM (\n"
+                    + "SELECT Product.*,ROW_NUMBER() OVER (ORDER BY id ASC) AS RN \n"
+                    + " FROM Product where name like ? ) AS X WHERE RN > ?*?-? AND RN <= ?*?-?";
+
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, "%" + keyword + "%");
+            ps.setInt(2, pageIndex);
+            ps.setInt(3, pageSize);
+            ps.setInt(4, pageSize);
+            ps.setInt(5, pageIndex + 1);
+            ps.setInt(6, pageSize);
+            ps.setInt(7, pageSize);
+            rs = ps.executeQuery();
+
+            List<Product> list = new ArrayList<>();
+            while (rs.next()) {
+                Product P = new Product(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getInt(5),
+                        rs.getDouble(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getDate(9),
+                        rs.getInt(10));
+
+                list.add(P);
+            }
+            return list;
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return null;
+
+    }
+
+    public int countPageWhenSearch(String keyword, int pageSize) {
+        try {
+            String query = "select Count(*) from product where name like ? ";
+
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, "%" + keyword + "%");
+            rs = ps.executeQuery();
+
+            int count = 0;
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+            int numOfPage = count / pageSize;
+            if (count % pageSize != 0) {
+                numOfPage++;
+            }
+            return numOfPage;
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return 0;
     }
 }

@@ -12,7 +12,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Huy Hoang Shop - Start Bootstrap Template</title>
+        <title>Shop Homepage - Start Bootstrap Template</title>
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -32,10 +32,12 @@
 
             <div class="row">
 
-                <%@include file="sideBarComponent.jsp"%>
+                <%--<%@include file="sideBarComponent.jsp"%>--%>
+                
+                <!--<div class="col-lg-2"></div>-->
                 <!-- /.col-lg-3 -->
 
-                <div class="col-lg-9">
+                <div class="col-lg-12">
 
                     <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
                         <ol class="carousel-indicators">
@@ -73,42 +75,46 @@
                                         <h4 class="card-title">
                                             <a href="#">${P.name}</a>
                                         </h4>
-                                        <h5>$ ${P.price}</h5>
+                                        <h5>${P.price}</h5>
                                         <p class="card-text">${P.description}</p>
                                     </div>
                                     <div class="card-footer">
                                         <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
                                     </div>
-                                    <a class="btn btn-primary" href="add-to-card?productId=${P.id}">Add To Cart</a>
                                 </div>
                             </div>
                         </c:forEach>
 
                     </div>
                     <!-- /.row -->
-                   
-                            <nav aria-label="..." class="d-flex justify-content-center">
-                                <ul class="pagination pagination-lg">
-                                    <c:forEach begin="1" end="${totalPage}" var="i">
-                                        <c:choose>
-                                            <c:when test="${pageIndex == i}">
-                                                <li class="page-item active" aria-current="page">
-                                                    <span class="page-link">
-                                                        ${i}
-                                                        <span class="sr-only">(current)</span>
-                                                    </span>
-                                                </li>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <li class="page-item"><a class="page-link" href="home?pageIndex=${i}">${i}</a></li>
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </c:forEach>
-                                </ul>
-                            </nav>
-                      
-                    
-
+                    <c:choose>
+                        <c:when test="${listProduct == null || listProduct.size() == 0}">
+                            <h1 style="min-height: 800px">Not Founds</h1>
+                        </c:when>
+                        <c:otherwise>
+                            <c:if test="${totalPage > 1}">
+                                <nav aria-label="..." class="d-flex justify-content-center">
+                                    <ul class="pagination pagination-lg">
+                                        <c:forEach begin="1" end="${totalPage}" var="i">
+                                            <c:choose>
+                                                <c:when test="${pageIndex == i}">
+                                                    <li class="page-item active" aria-current="page">
+                                                        <span class="page-link">
+                                                            ${i}
+                                                            <span class="sr-only">(current)</span>
+                                                        </span>
+                                                    </li>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <li class="page-item"><a class="page-link" href="search?pageIndex=${i}&keyword=${keyword}">${i}</a></li>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
+                                    </ul>
+                                </nav>
+                            </c:if>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
                 <!-- /.col-lg-9 -->
 

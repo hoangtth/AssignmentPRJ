@@ -86,11 +86,7 @@
 
                     </div>
                     <!-- /.row -->
-                    <c:choose>
-                        <c:when test="${listProduct == null || listProduct.size() == 0}">
-                            Not Found
-                        </c:when>
-                        <c:otherwise>
+                   
                             <nav aria-label="..." class="d-flex justify-content-center">
                                 <ul class="pagination pagination-lg">
                                     <c:forEach begin="1" end="${totalPage}" var="i">
@@ -110,8 +106,8 @@
                                         </c:forEach>
                                 </ul>
                             </nav>
-                        </c:otherwise>
-                    </c:choose>
+                      
+                    
 
                 </div>
                 <!-- /.col-lg-9 -->
