@@ -5,24 +5,22 @@
  */
 package controller;
 
-import model.Product;
-import dao.CategoryDAO;
-import dao.ProductDAO;
-import java.util.List;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Category;
+import model.Cart;
 
 /**
  *
  * @author Admin
  */
-public class HomeController extends HttpServlet {
+public class DeleteCartController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,15 +36,17 @@ public class HomeController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet HomeController</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet HomeController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            int productId = Integer.parseInt(request.getParameter("productId"));
+            HttpSession session = request.getSession();
+            Map<Integer, Cart> carts = (Map<Integer, Cart>) session.getAttribute("carts");
+            if (carts == null) {
+                carts = new LinkedHashMap<>();
+            }
+            if (carts.containsKey(productId)) {
+                carts.remove(productId);
+            }
+            session.setAttribute("carts", carts);
+            response.sendRedirect("carts");
         }
     }
 
@@ -62,24 +62,7 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int pageIndex = 1;
-        final int PAGE_SIZE = 6;
-        String raw_pageIndex = request.getParameter("pageIndex");
-        List<Category> listCategory = new CategoryDAO().getAll();
-        List<Product> listProduct = new ProductDAO().getAllPagging(pageIndex, PAGE_SIZE);
-        int totalPage = new ProductDAO().countPage(PAGE_SIZE);
-        HttpSession session = request.getSession();
-        session.setAttribute("listCategory", listCategory);
-            
-        if (raw_pageIndex != null) {
-            pageIndex = Integer.parseInt(raw_pageIndex);
-        }
-
-        request.setAttribute("pageIndex", pageIndex);
-        request.setAttribute("listProduct", listProduct);
-        request.setAttribute("totalPage", totalPage);
-        session.setAttribute("urlHistory", "home");
-        request.getRequestDispatcher("home.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

@@ -38,7 +38,7 @@
     </servlet>
     <servlet>
         <servlet-name>deleteCartController</servlet-name>
-        <servlet-class>controller.RemoveCartController</servlet-class>
+        <servlet-class>controller.DeleteCartController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UpdateQuantityController</servlet-name>

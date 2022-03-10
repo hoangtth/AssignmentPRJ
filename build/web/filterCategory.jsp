@@ -79,6 +79,7 @@
                                     <div class="card-footer">
                                         <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
                                     </div>
+                                    <a class="btn btn-primary" href="add-to-card?productId=${P.id}">Add To Cart</a>
                                 </div>
                             </div>
                         </c:forEach>
@@ -99,7 +100,7 @@
                                             </li>
                                         </c:when>
                                         <c:otherwise>
-                                           <li class="page-item"><a class="page-link" href="filter?pageIndex=${i}&categoryId=${categoryId}">${i}</a></li>
+                                            <li class="page-item"><a class="page-link" href="filter?pageIndex=${i}&categoryId=${categoryId}">${i}</a></li>
                                             </c:otherwise>
                                         </c:choose>
                                     </c:forEach>

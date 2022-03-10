@@ -55,6 +55,7 @@ public class FilterController extends HttpServlet {
             request.setAttribute("listProduct", listProduct);
             request.setAttribute("totalPage", totalPage);
             request.setAttribute("pageIndex", pageIndex);
+             request.getSession().setAttribute("urlHistory", "filter?categoryId=" + categoryId);
             request.getRequestDispatcher("filterCategory.jsp").forward(request, response);
         }
     }
