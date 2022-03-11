@@ -40,7 +40,7 @@ public class FilterController extends HttpServlet {
             int categoryId = Integer.parseInt(request.getParameter("categoryId"));
             
             int pageIndex = 1;
-            final int PAGE_SIZE = 6;
+            final int PAGE_SIZE = 2;
             
             String raw_page = request.getParameter("pageIndex");
             if(raw_page!=null){
@@ -55,6 +55,7 @@ public class FilterController extends HttpServlet {
             request.setAttribute("listProduct", listProduct);
             request.setAttribute("totalPage", totalPage);
             request.setAttribute("pageIndex", pageIndex);
+            request.setAttribute("categoryId", categoryId);
              request.getSession().setAttribute("urlHistory", "filter?categoryId=" + categoryId);
             request.getRequestDispatcher("filterCategory.jsp").forward(request, response);
         }

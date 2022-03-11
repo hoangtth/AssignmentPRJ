@@ -52,6 +52,10 @@
         <servlet-name>TheEndController</servlet-name>
         <servlet-class>controller.TheEndController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddToCartAsyncController</servlet-name>
+        <servlet-class>controller.async.AddToCartAsyncController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>FilterController</servlet-name>
         <url-pattern>/filter</url-pattern>
@@ -103,6 +107,10 @@
     <servlet-mapping>
         <servlet-name>TheEndController</servlet-name>
         <url-pattern>/TheEnd</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddToCartAsyncController</servlet-name>
+        <url-pattern>/AddToCartAsyncController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

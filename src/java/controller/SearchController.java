@@ -38,7 +38,7 @@ public class SearchController extends HttpServlet {
             String keyword = request.getParameter("keyword");
             
             int pageIndex = 1;
-            final int PAGE_SIZE = 6;
+            final int PAGE_SIZE = 2;
             
             String raw_page = request.getParameter("pageIndex");
             if(raw_page!=null){

@@ -49,7 +49,7 @@
 
             </ul>
             <form action="search" style="margin-left: 2px" class="d-flex">
-                <input name="keyword" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <input value="${keyword}" name="keyword" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
         </div>

@@ -32,12 +32,12 @@
 
             <div class="row">
 
-                <%--<%@include file="sideBarComponent.jsp"%>--%>
+                <%@include file="sideBarComponent.jsp"%>
                 
                 <!--<div class="col-lg-2"></div>-->
                 <!-- /.col-lg-3 -->
 
-                <div class="col-lg-12">
+                <div class="col-lg-9">
 
                     <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
                         <ol class="carousel-indicators">
