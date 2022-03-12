@@ -19,12 +19,11 @@ public class Product {
     private String description;
     private String image;
     private Date createDate;
-    private int status;
 
     public Product() {
     }
 
-    public Product(int id, int categoryId, String code, String name, int quantity, double price, String description, String image, Date createDate, int status) {
+    public Product(int id, int categoryId, String code, String name, int quantity, double price, String description, String image, Date createDate) {
         this.id = id;
         this.categoryId = categoryId;
         this.code = code;
@@ -34,7 +33,6 @@ public class Product {
         this.description = description;
         this.image = image;
         this.createDate = createDate;
-        this.status = status;
     }
 
     public int getId() {
@@ -108,19 +106,5 @@ public class Product {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" + "id=" + id + ", categoryId=" + categoryId + ", code=" + code + ", name=" + name + ", quantity=" + quantity + ", price=" + price + ", description=" + description + ", image=" + image + ", createDate=" + createDate + ", status=" + status + '}';
-    }
-
     
 }

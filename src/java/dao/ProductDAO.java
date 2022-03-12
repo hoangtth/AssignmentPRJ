@@ -49,8 +49,7 @@ public class ProductDAO {
                         rs.getDouble(6),
                         rs.getString(7),
                         rs.getString(8),
-                        rs.getDate(9),
-                        rs.getInt(10));
+                        rs.getDate(9));
 
                 list.add(P);
             }
@@ -112,8 +111,7 @@ public class ProductDAO {
                         rs.getDouble(6),
                         rs.getString(7),
                         rs.getString(8),
-                        rs.getDate(9),
-                        rs.getInt(10));
+                        rs.getDate(9));
 
                 list.add(P);
             }
@@ -168,8 +166,7 @@ public class ProductDAO {
                         rs.getDouble(6),
                         rs.getString(7),
                         rs.getString(8),
-                        rs.getDate(9),
-                        rs.getInt(10));
+                        rs.getDate(9));
                 return P;
             }
 
@@ -199,8 +196,7 @@ public class ProductDAO {
                         rs.getDouble(6),
                         rs.getString(7),
                         rs.getString(8),
-                        rs.getDate(9),
-                        rs.getInt(10));
+                        rs.getDate(9));
 
                 list.add(P);
             }
@@ -239,8 +235,7 @@ public class ProductDAO {
                         rs.getDouble(6),
                         rs.getString(7),
                         rs.getString(8),
-                        rs.getDate(9),
-                        rs.getInt(10));
+                        rs.getDate(9));
 
                 list.add(P);
             }
@@ -284,6 +279,36 @@ public class ProductDAO {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             ps.setInt(1, id);
+            ps.executeUpdate();
+
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+    }
+
+    public void addProduct(Product p) {
+        try {
+            String query = "INSERT INTO [ShoppingOnline].[dbo].[Product]\n"
+                    + "           ([categoryId]\n"
+                    + "           ,[code]\n"
+                    + "           ,[name]\n"
+                    + "           ,[quantity]\n"
+                    + "           ,[price]\n"
+                    + "           ,[description]\n"
+                    + "           ,[img])\n"
+                    + "     VALUES\n"
+                    + "           (?,?,?,?,?,?,?)";
+
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, p.getCategoryId());
+            ps.setString(2, p.getCode());
+            ps.setString(3, p.getName());
+            ps.setInt(4, p.getQuantity());
+            ps.setDouble(5, p.getPrice());
+            ps.setString(6, p.getDescription());
+            ps.setString(7, p.getImage());
+
             ps.executeUpdate();
 
         } catch (Exception ex) {
