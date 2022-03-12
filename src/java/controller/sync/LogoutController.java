@@ -3,26 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.sync;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Cart;
 
 /**
  *
  * @author Admin
  */
-public class CartController extends HttpServlet {
+public class LogoutController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,24 +33,24 @@ public class CartController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession();
-            Map<Integer, Cart> carts = (Map<Integer, Cart>) session.getAttribute("carts");
-            if (carts == null) {
-                carts = new LinkedHashMap<>();
-            }
-            double totalPrice = 0;
-            for (Map.Entry<Integer, Cart> entry : carts.entrySet()) {
-                Integer productId = entry.getKey();
-                Cart cart = entry.getValue();
-                
-                totalPrice += cart.getQuantity() * cart.getProduct().getPrice();
-            }
+            request.getSession().removeAttribute("account");
+            //Xoa Cookie
+            //Xóa cookie
+            Cookie[] cookies = request.getCookies();
 
-            request.setAttribute("totalPrice", totalPrice);
-            request.setAttribute("carts", carts);
-            request.getRequestDispatcher("cart.jsp").forward(request, response);
+            for (Cookie cooky : cookies) {
+                if (cooky.getName().equals("username")) {
+                    cooky.setMaxAge(0);
+                    response.addCookie(cooky);
+                }
+                if (cooky.getName().equals("password")) {
+                    cooky.setMaxAge(0);
+                    response.addCookie(cooky);
+                }
+            }
+            request.getSession().removeAttribute("carts");
+            response.sendRedirect("login");
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

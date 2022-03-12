@@ -3,26 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.sync;
 
+import model.Product;
+import dao.CategoryDAO;
 import dao.ProductDAO;
+import java.util.List;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Cart;
-import model.Product;
+import model.Category;
 
 /**
  *
  * @author Admin
  */
-public class AddToCartController extends HttpServlet {
+public class HomeController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,29 +38,15 @@ public class AddToCartController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            int productId = Integer.parseInt(request.getParameter("productId"));
-            HttpSession session = request.getSession();
-            Map<Integer, Cart> carts = (Map<Integer, Cart>) session.getAttribute("carts");
-            if (carts == null) {
-                carts = new LinkedHashMap<>(); // dùng cho nó có thứ tự vì hash map k có thứ tự
-            }
-
-            if (carts.containsKey(productId)) { // sản phẩm đã có trên giỏ hàng
-                int oldQuantity = carts.get(productId).getQuantity();
-                carts.get(productId).setQuantity(oldQuantity + 1);
-            } else { // sản phẩm chưa có trên giỏ hàng
-                Product product = new ProductDAO().getProductById(productId);
-                carts.put(productId, Cart.builder().product(product).quantity(1).build());
-            }
-            //luu carts len session
-            session.setAttribute("carts", carts);
-
-
-            String urlHistory = (String) session.getAttribute("urlHistory");
-            if (urlHistory == null) {
-                urlHistory = "home";
-            }
-            response.sendRedirect(urlHistory);
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet HomeController</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet HomeController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -76,7 +62,24 @@ public class AddToCartController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int pageIndex = 1;
+        final int PAGE_SIZE = 6;
+        String raw_pageIndex = request.getParameter("pageIndex");
+        List<Category> listCategory = new CategoryDAO().getAll();
+        List<Product> listProduct = new ProductDAO().getAllPagging(pageIndex, PAGE_SIZE);
+        int totalPage = new ProductDAO().countPage(PAGE_SIZE);
+        HttpSession session = request.getSession();
+        session.setAttribute("listCategory", listCategory);
+            
+        if (raw_pageIndex != null) {
+            pageIndex = Integer.parseInt(raw_pageIndex);
+        }
+
+        request.setAttribute("pageIndex", pageIndex);
+        request.setAttribute("listProduct", listProduct);
+        request.setAttribute("totalPage", totalPage);
+        session.setAttribute("urlHistory", "home");
+        request.getRequestDispatcher("home.jsp").forward(request, response);
     }
 
     /**

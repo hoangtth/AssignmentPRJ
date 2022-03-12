@@ -5,7 +5,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#">Start Bootstrap</a>
+        <a class="navbar-brand" href="#">Huy Hoang Watch</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -28,7 +28,7 @@
                 <li class="nav-item">
                     <div class="d-flex">
                         <a class="nav-link" href="carts">Cart</a>
-                        <span style="color: orange">${sessionScope.carts.size()}</span>
+                        <span id="cart_number" style="color: orange">${sessionScope.carts.size()}</span>
                     </div>
                 </li>
                 <c:choose>

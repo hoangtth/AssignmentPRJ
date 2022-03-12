@@ -12,7 +12,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Huy Hoang Shop - Start Bootstrap Template</title>
+        <title>Huy Hoang Watch</title>
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -86,28 +86,28 @@
 
                     </div>
                     <!-- /.row -->
-                   
-                            <nav aria-label="..." class="d-flex justify-content-center">
-                                <ul class="pagination pagination-lg">
-                                    <c:forEach begin="1" end="${totalPage}" var="i">
-                                        <c:choose>
-                                            <c:when test="${pageIndex == i}">
-                                                <li class="page-item active" aria-current="page">
-                                                    <span class="page-link">
-                                                        ${i}
-                                                        <span class="sr-only">(current)</span>
-                                                    </span>
-                                                </li>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <li class="page-item"><a class="page-link" href="home?pageIndex=${i}">${i}</a></li>
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </c:forEach>
-                                </ul>
-                            </nav>
-                      
-                    
+
+                    <nav aria-label="..." class="d-flex justify-content-center">
+                        <ul class="pagination pagination-lg">
+                            <c:forEach begin="1" end="${totalPage}" var="i">
+                                <c:choose>
+                                    <c:when test="${pageIndex == i}">
+                                        <li class="page-item active" aria-current="page">
+                                            <span class="page-link">
+                                                ${i}
+                                                <span class="sr-only">(current)</span>
+                                            </span>
+                                        </li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="page-item"><a class="page-link" href="home?pageIndex=${i}">${i}</a></li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                        </ul>
+                    </nav>
+
+
 
                 </div>
                 <!-- /.col-lg-9 -->
@@ -121,7 +121,7 @@
         <!-- Footer -->
         <footer class="py-5 bg-dark">
             <div class="container">
-                <p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p>
+                <p class="m-0 text-center text-white">We always bring luxury to you</p>
             </div>
             <!-- /.container -->
         </footer>
@@ -129,7 +129,6 @@
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
     </body>
 
 </html>

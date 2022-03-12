@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.sync;
 
+import dao.OrderDAO;
+import dao.OrderDetailDAO;
+import dao.ShippingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.LinkedHashMap;
@@ -15,12 +18,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Cart;
+import model.Order;
+import model.Shipping;
 
 /**
  *
  * @author Admin
  */
-public class DeleteCartController extends HttpServlet {
+public class CheckOutController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,17 +41,21 @@ public class DeleteCartController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            int productId = Integer.parseInt(request.getParameter("productId"));
             HttpSession session = request.getSession();
             Map<Integer, Cart> carts = (Map<Integer, Cart>) session.getAttribute("carts");
             if (carts == null) {
                 carts = new LinkedHashMap<>();
             }
-            if (carts.containsKey(productId)) {
-                carts.remove(productId);
+            double totalPrice = 0;
+            for (Map.Entry<Integer, Cart> entry : carts.entrySet()) {
+                Integer productId = entry.getKey();
+                Cart cart = entry.getValue();
+
+                totalPrice += cart.getQuantity() * cart.getProduct().getPrice();
             }
-            session.setAttribute("carts", carts);
-            response.sendRedirect("carts");
+//            request.setAttribute("carts", carts);
+            request.setAttribute("totalPrice", totalPrice);
+            request.getRequestDispatcher("checkout.jsp").forward(request, response);
         }
     }
 
@@ -76,7 +85,49 @@ public class DeleteCartController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        String name = request.getParameter("name");
+        String phone = request.getParameter("mobile");
+        String address = request.getParameter("address");
+        String note = request.getParameter("note");
+        
+        
+        //luu vao database
+
+        //Shipping to database
+        Shipping shipping = new Shipping();
+        shipping.setName(name);
+        shipping.setAddress(address);
+        shipping.setPhone(phone);
+        int shippingId = new ShippingDAO().createAndGetId(shipping); //tra ve id tu tang cua ban ghi vua luu vao database
+
+        HttpSession session = request.getSession();
+        Map<Integer, Cart> carts = (Map<Integer, Cart>) session.getAttribute("carts");
+        if (carts == null) {
+            carts = new LinkedHashMap<>();
+        }
+        double totalPrice = 0;
+        for (Map.Entry<Integer, Cart> entry : carts.entrySet()) {
+            Integer productId = entry.getKey();
+            Cart cart = entry.getValue();
+
+            totalPrice += cart.getQuantity() * cart.getProduct().getPrice();
+        }
+        
+        //Order to database
+        Order order = new Order();
+        order.setAccountId(1);
+        order.setTotalPrice(totalPrice);
+        order.setNote(note);
+        order.setShippingId(shippingId);
+        int orderID = new OrderDAO().createAndGetId(order);
+        
+        
+        //Orderdetail to database
+        new OrderDetailDAO().saveCart(orderID,carts);
+        session.removeAttribute("carts");   
+        response.sendRedirect("TheEnd");
     }
 
     /**

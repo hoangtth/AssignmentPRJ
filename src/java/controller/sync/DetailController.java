@@ -3,25 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.sync;
 
-import dao.CategoryDAO;
+import dao.ImageDAO;
 import dao.ProductDAO;
+import java.util.List;
+import model.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Category;
-import model.Product;
+import model.Image;
 
 /**
  *
- * @author ThinkPro
+ * @author Admin
  */
-public class FilterController extends HttpServlet {
+public class DetailController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,27 +37,14 @@ public class FilterController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-            
-            int pageIndex = 1;
-            final int PAGE_SIZE = 2;
-            
-            String raw_page = request.getParameter("pageIndex");
-            if(raw_page!=null){
-                pageIndex = Integer.parseInt(raw_page);
-            }
-            
-            ProductDAO productDAO = new ProductDAO();
-            
-            List<Product> listProduct = productDAO.getProductByCategoryId(categoryId,pageIndex, PAGE_SIZE);
-            int totalPage = productDAO.countPageWhenFilterCategory(categoryId,PAGE_SIZE);
+            int productId = Integer.parseInt(request.getParameter("productId"));
+            Product product = new ProductDAO().getProductById(productId);
+            List<Image> listImages = new ImageDAO().getImagesByProductId(productId);
 
-            request.setAttribute("listProduct", listProduct);
-            request.setAttribute("totalPage", totalPage);
-            request.setAttribute("pageIndex", pageIndex);
-            request.setAttribute("categoryId", categoryId);
-             request.getSession().setAttribute("urlHistory", "filter?categoryId=" + categoryId);
-            request.getRequestDispatcher("filterCategory.jsp").forward(request, response);
+            request.setAttribute("product", product);
+            request.setAttribute("listImages", listImages);
+            request.getSession().setAttribute("urlHistory", "detail?productId=" + productId);
+            request.getRequestDispatcher("detail.jsp").forward(request, response);
         }
     }
 

@@ -3,11 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.sync;
 
-import dao.ProductDAO;
-import java.util.List;
-import model.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Admin
  */
-public class SearchController extends HttpServlet {
+public class TheEndController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,26 +32,7 @@ public class SearchController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String keyword = request.getParameter("keyword");
-            
-            int pageIndex = 1;
-            final int PAGE_SIZE = 2;
-            
-            String raw_page = request.getParameter("pageIndex");
-            if(raw_page!=null){
-                pageIndex = Integer.parseInt(raw_page);
-            }
-            
-            ProductDAO productDAO = new ProductDAO();
-            
-            List<Product> listProduct = productDAO.SearchAndPaging(keyword,pageIndex, PAGE_SIZE);
-            int totalPage = productDAO.countPageWhenSearch(keyword,PAGE_SIZE);
-
-            request.setAttribute("keyword", keyword);
-            request.setAttribute("listProduct", listProduct);
-            request.setAttribute("totalPage", totalPage);
-            request.setAttribute("pageIndex", pageIndex);
-            request.getRequestDispatcher("search.jsp").forward(request, response);
+            request.getRequestDispatcher("theEnd.jsp").forward(request, response);
         }
     }
 

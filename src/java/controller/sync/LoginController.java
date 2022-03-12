@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.sync;
 
 import dao.AccountDAO;
 import java.io.IOException;
@@ -30,14 +30,6 @@ public class LoginController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        }
-    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -50,7 +42,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //kiểm tra cookie
+        //kiểm tra cookie 
         Cookie[] cookies = request.getCookies();
         String username = null;
         String password = null;
@@ -65,16 +57,16 @@ public class LoginController extends HttpServlet {
                 break;
             }
         }
-
         if (username != null && password != null) {
             Account account = new AccountDAO().login(username, password);
-            if (account != null) { //cookie hợp lệ
+            if (account != null) { // cookie hợp lệ
                 request.getSession().setAttribute("account", account);
                 response.sendRedirect("home");
                 return;
             }
         }
         request.getRequestDispatcher("login.jsp").forward(request, response);
+
     }
 
     /**
@@ -88,14 +80,16 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        //check login
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         boolean remember = request.getParameter("remember") != null;
 
-        // check username, password
+        //check username, password
         Account account = new AccountDAO().login(username, password);
 
-        if (account != null) { //hợp lệ -> lưu lên session
+        if (account != null) {  //hop le -> luu len section 
             //remember
             if (remember) {
                 Cookie usernameCookie = new Cookie("username", username);
@@ -105,14 +99,13 @@ public class LoginController extends HttpServlet {
                 response.addCookie(usernameCookie);
                 response.addCookie(passwordCookie);
             }
+            //khong remember
             request.getSession().setAttribute("account", account);
             response.sendRedirect("home");
-            //không remember
-        } else {//Không hợp lệ -> trả về lỗi
-            request.setAttribute("error", "Username or password incorrect");
+        } else {//khong hop le -> tra ve loi
+            request.setAttribute("error", "username or password incorrect");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
-
     }
 
     /**
