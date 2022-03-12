@@ -275,4 +275,19 @@ public class ProductDAO {
         }
         return 0;
     }
+
+    public void DeleteProductById(int id) {
+        try {
+            String query = "DELETE FROM [ShoppingOnline].[dbo].[Product]\n"
+                    + "      WHERE id=?";
+
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+    }
 }

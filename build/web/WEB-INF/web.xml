@@ -60,6 +60,18 @@
         <servlet-name>RegisterController</servlet-name>
         <servlet-class>controller.sync.RegisterController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ManagerProductController</servlet-name>
+        <servlet-class>controller.sync.ManagerProductController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteProductController</servlet-name>
+        <servlet-class>controller.sync.DeleteProductController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddProductController</servlet-name>
+        <servlet-class>controller.sync.AddProductController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>FilterController</servlet-name>
         <url-pattern>/filter</url-pattern>
@@ -127,6 +139,18 @@
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManagerProductController</servlet-name>
+        <url-pattern>/manager-product</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteProductController</servlet-name>
+        <url-pattern>/delete-product</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddProductController</servlet-name>
+        <url-pattern>/add-product</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
