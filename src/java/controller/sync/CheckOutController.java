@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Account;
 import model.Cart;
 import model.Order;
 import model.Shipping;
@@ -91,10 +92,8 @@ public class CheckOutController extends HttpServlet {
         String phone = request.getParameter("mobile");
         String address = request.getParameter("address");
         String note = request.getParameter("note");
-        
-        
-        //luu vao database
 
+        //luu vao database
         //Shipping to database
         Shipping shipping = new Shipping();
         shipping.setName(name);
@@ -114,19 +113,19 @@ public class CheckOutController extends HttpServlet {
 
             totalPrice += cart.getQuantity() * cart.getProduct().getPrice();
         }
-        
+
         //Order to database
+        Account a = (Account) session.getAttribute("account");
         Order order = new Order();
-        order.setAccountId(1);
+        order.setAccountId(a.getId());
         order.setTotalPrice(totalPrice);
         order.setNote(note);
         order.setShippingId(shippingId);
         int orderID = new OrderDAO().createAndGetId(order);
-        
-        
+
         //Orderdetail to database
-        new OrderDetailDAO().saveCart(orderID,carts);
-        session.removeAttribute("carts");   
+        new OrderDetailDAO().saveCart(orderID, carts);
+        session.removeAttribute("carts");
         response.sendRedirect("TheEnd");
     }
 

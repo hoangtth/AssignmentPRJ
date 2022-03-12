@@ -38,6 +38,7 @@
                             <form action="login" method="post">
                                 <h1 style="text-align: center ; margin-bottom: 46px">Login</h1>
                                 <!-- user input -->
+                                <h3 style="color: green">${success} </h3>
                                 <div class="form-outline mb-4">
                                     <input name="username" type="text" id="username" class="form-control form-control-lg" />
                                     <label class="form-label" for="username">Username</label>
@@ -70,7 +71,7 @@
                                 <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
                             </div>
 
-                            <a class="btn btn-primary btn-lg btn-block" style="background-color: #3b5998" href="#!" role="button">
+                            <a class="btn btn-primary btn-lg btn-block" style="background-color: #3b5998" href="register" role="button">
                                 <i class="me-2"></i>Register
                             </a> 
                         </div>

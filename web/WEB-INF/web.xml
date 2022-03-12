@@ -5,10 +5,6 @@
         <servlet-class>controller.sync.FilterController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>RegisterController</servlet-name>
-        <servlet-class>controller.RegisterController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controller.sync.LoginController</servlet-class>
     </servlet>
@@ -60,13 +56,13 @@
         <servlet-name>AddToCartAsyncController</servlet-name>
         <servlet-class>controller.async.AddToCartAsyncController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RegisterController</servlet-name>
+        <servlet-class>controller.sync.RegisterController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>FilterController</servlet-name>
         <url-pattern>/filter</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>RegisterController</servlet-name>
-        <url-pattern>/register</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -127,6 +123,10 @@
     <servlet-mapping>
         <servlet-name>AddToCartAsyncController</servlet-name>
         <url-pattern>/add-to-cart-async</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisterController</servlet-name>
+        <url-pattern>/register</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

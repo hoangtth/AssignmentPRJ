@@ -16,15 +16,22 @@
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
+                <c:if test="${sessionScope.account.role eq 'ADMIN'}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Manager Account</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Manager Product</a>
+                    </li>
+                </c:if>
+                <c:if test="${sessionScope.account.role != 'ADMIN'}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </c:if>
                 <li class="nav-item">
                     <div class="d-flex">
                         <a class="nav-link" href="carts">Cart</a>

@@ -44,54 +44,54 @@
                 <c:otherwise>
                     <div class="mt-3">
                         <h4>Shopping Cart</h4>
-                            <table class="w-100 table table-striped mt-3">
-                                <thead>
-                                    <tr>
-                                        <th>Image</th>
-                                        <th>Name of Product</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
-                                        <th>Total Price</th>
-                                        <th>Action</th>
+                        <table class="w-100 table table-striped mt-3">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Name of Product</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total Price</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${carts}" var="C" varStatus="track">
+                                <form action="update-quantity">
+                                    <tr>    
+                                    <input type="hidden" name="productId" value="${C.value.product.id}" />
+                                    <td>
+                                        <img src="images/${C.value.product.image}" style="width: 100px">
+                                    </td>
+                                    <td>${C.value.product.name}</td>
+                                    <td>
+                                        $ ${C.value.product.price}
+                                    </td>
+                                    <td>
+                                        <input onchange="this.form.submit()" type="number" min="1" max="${C.value.product.quantity}" name="quantity" value="${C.value.quantity}" style="width: 60px"/>
+                                    </td>
+                                    <td>
+                                        $ ${C.value.quantity * C.value.product.price}
+                                    </td>
+                                    <td>
+                                        <a href="delete-cart?productId=${C.value.product.id}" class="btn btn-danger"><i class="bi bi-trash"></i>Delete</i></a>
+                                    </td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach items="${carts}" var="C" varStatus="track">
-                                    <form action="update-quantity">
-                                        <tr>    
-                                        <input type="hidden" name="productId" value="${C.value.product.id}" />
-                                            <td>
-                                                <img src="images/${C.value.product.image}" style="width: 100px">
-                                            </td>
-                                            <td>${C.value.product.name}</td>
-                                            <td>
-                                             $ ${C.value.product.price}
-                                            </td>
-                                            <td>
-                                                <input onchange="this.form.submit()" type="number" min="1" max="${C.value.product.quantity}" name="quantity" value="${C.value.quantity}" style="width: 60px"/>
-                                            </td>
-                                            <td>
-                                              $ ${C.value.quantity * C.value.product.price}
-                                            </td>
-                                            <td>
-                                                <a href="delete-cart?productId=${C.value.product.id}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                                            </td>
-                                        </tr>
-                                    </form>
-                                    </c:forEach>
-                                </tbody>
-                            </table>
-                            <hr/>
-                            <div class="text-right">
-                                <h4>Total Money:${totalPrice}</h4>
-                            </div>
-                            <hr/>
-                            <div class="text-right">
-                                <a href="checkout" class="btn btn-success ml-2">Continue
-                                    <i class="fas fa-arrow-right ml-2"></i>
-                                </a>
-                            </div>
-                        
+                                </form>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                        <hr/>
+                        <div class="text-right">
+                            <h4>Total Money:${totalPrice}</h4>
+                        </div>
+                        <hr/>
+                        <div class="text-right">
+                            <a href="checkout" class="btn btn-success ml-2">Continue
+                                <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+
                     </div>
                 </c:otherwise>
             </c:choose>
