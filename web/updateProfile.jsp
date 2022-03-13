@@ -60,8 +60,7 @@
                                     <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
                                     <div class="mt-3">
                                         <h4>${account.displayName}</h4>
-                                        <button class="btn btn-primary">History</button>
-                                        <button class="btn btn-outline-primary">Setting</button>
+                                        <a href="history-orders" class="btn btn-primary">History</a>
                                     </div>
                                 </div>
 

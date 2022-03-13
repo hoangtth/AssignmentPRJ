@@ -88,6 +88,10 @@
         <servlet-name>updateProfileController</servlet-name>
         <servlet-class>controller.sync.updateProfileController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HistoryOrdersController</servlet-name>
+        <servlet-class>controller.sync.HistoryOrdersController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>FilterController</servlet-name>
         <url-pattern>/filter</url-pattern>
@@ -183,6 +187,10 @@
     <servlet-mapping>
         <servlet-name>updateProfileController</servlet-name>
         <url-pattern>/updateProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HistoryOrdersController</servlet-name>
+        <url-pattern>/history-orders</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

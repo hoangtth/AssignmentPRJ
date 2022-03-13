@@ -93,6 +93,15 @@ public class Order {
         this.shippingId = shippingId;
     }
 
+    public List<OrderDetail> getList() {
+        return list;
+    }
+
+    public void setList(List<OrderDetail> list) {
+        this.list = list;
+    }
+    
+
     @Override
     public String toString() {
         return "Order{" + "id=" + id + ", accountId=" + accountId + ", totalPrice=" + totalPrice + ", note=" + note + ", createdDate=" + createdDate + ", shippingId=" + shippingId + '}';

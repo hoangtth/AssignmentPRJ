@@ -6,20 +6,26 @@
 package dao;
 
 import context.DBContext;
+import java.util.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Order;
-import model.Shipping;
+import model.OrderDetail;
 
 /**
  *
  * @author Admin
  */
 public class OrderDAO {
+
+    Connection conn;
+    PreparedStatement ps;
+    ResultSet rs;
 
     public int createAndGetId(Order order) {
         try {
@@ -30,15 +36,15 @@ public class OrderDAO {
                     + "           ,[shipping_id])\n"
                     + "     VALUES\n"
                     + "           (?,?,?,?)";
-            Connection conn = new DBContext().getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, order.getAccountId());
             ps.setDouble(2, order.getTotalPrice());
             ps.setString(3, order.getNote());
             ps.setInt(4, order.getShippingId());
             ps.executeUpdate();
 
-            ResultSet rs = ps.getGeneratedKeys();
+            rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 return rs.getInt(1);
             }
@@ -46,6 +52,33 @@ public class OrderDAO {
             Logger.getLogger(ShippingDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
+    }
+
+    public List<Order> getAllOrdersByAccountId(int accountId) {
+        try {
+            String query = " select * from Orders where account_id=?";
+
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, accountId);
+            rs = ps.executeQuery();
+            List<Order> listOrders = new ArrayList<>();
+            while (rs.next()) {
+                List<OrderDetail> listOrderDetails = new OrderDetailDAO().getAllOrderDetailsByOrderId(rs.getInt(1));
+                Order order = new Order(rs.getInt(1), rs.getInt(2), rs.getDouble(3),
+                        rs.getString(4), rs.getString(5), rs.getInt(6), listOrderDetails);
+                listOrders.add(order);
+            }
+            return listOrders;
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return null;
+    }
+    
+    public static void main(String[] args) {
+        List<Order> l = new OrderDAO().getAllOrdersByAccountId(1);
+        System.out.println(l.get(0).getList().get(0).getProductName());
     }
 
 }

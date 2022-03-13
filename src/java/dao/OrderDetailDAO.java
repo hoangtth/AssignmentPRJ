@@ -70,11 +70,12 @@ public class OrderDetailDAO {
                         rs.getString(4), rs.getDouble(5), rs.getInt(6));
                 list.add(O);
             }
-
+            return list;
         } catch (Exception ex) {
             ex.printStackTrace(System.out);
         }
         return null;
     }
+
 
 }
