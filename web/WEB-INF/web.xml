@@ -80,6 +80,14 @@
         <servlet-name>BuyNowController</servlet-name>
         <servlet-class>controller.sync.BuyNowController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ProfileController</servlet-name>
+        <servlet-class>controller.sync.ProfileController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>updateProfileController</servlet-name>
+        <servlet-class>controller.sync.updateProfileController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>FilterController</servlet-name>
         <url-pattern>/filter</url-pattern>
@@ -167,6 +175,14 @@
     <servlet-mapping>
         <servlet-name>BuyNowController</servlet-name>
         <url-pattern>/buy-now</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfileController</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateProfileController</servlet-name>
+        <url-pattern>/updateProfile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

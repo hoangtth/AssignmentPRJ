@@ -1,26 +1,27 @@
+package controller.sync;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.sync;
 
-import dao.ProductDAO;
-import java.util.List;
-import model.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Image;
+import javax.servlet.http.HttpSession;
+import model.Account;
+import model.Cart;
 
 /**
  *
  * @author Admin
  */
-public class DetailController extends HttpServlet {
+public class ProfileController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,11 +37,15 @@ public class DetailController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            int productId = Integer.parseInt(request.getParameter("productId"));
-            Product product = new ProductDAO().getProductById(productId);     
-            request.setAttribute("product", product);
-            request.getSession().setAttribute("urlHistory", "detail?productId=" + productId);
-            request.getRequestDispatcher("detail.jsp").forward(request, response);
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ProfileController</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ProfileController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -56,7 +61,10 @@ public class DetailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        request.setAttribute("account", account);
+        request.getRequestDispatcher("profile.jsp").forward(request, response);
     }
 
     /**

@@ -101,4 +101,78 @@ public class AccountDAO {
         }
     }
 
+    public void updateAccount(int id, String name, String email, String phone, String address, String role) {
+        try {
+            String sql = "UPDATE [ShoppingOnline].[dbo].[Account]\n"
+                    + "   SET [displayName] = ?\n"
+                    + "      ,[address] = ?\n"
+                    + "      ,[email] = ?\n"
+                    + "      ,[phone] = ?\n"
+                    + "      ,[role] = ?\n"
+                    + " WHERE id=?";
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.setString(2, address);
+            ps.setString(3, email);
+            ps.setString(4, phone);
+            ps.setString(5, role);
+            ps.setInt(6, id);
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public Account getAccountById(int id) {
+        try {
+            String query = "select * from Account where id=?";
+
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Account a = Account.builder()
+                        .id(rs.getInt(1))
+                        .username(rs.getString(2))
+                        .password(rs.getString(3))
+                        .displayName(rs.getString(4))
+                        .address(rs.getString(5))
+                        .email(rs.getString(6))
+                        .phone(rs.getString(7))
+                        .role(rs.getString(8)).build();
+                return a;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return null;
+    }
+
+    public void updateAccountAndPass(int id, String name, String email, String phone, String address, String role, String newPass) {
+        try {
+            String sql = "UPDATE [ShoppingOnline].[dbo].[Account]\n"
+                    + "   SET [displayName] = ?\n"
+                    + "      ,[address] = ?\n"
+                    + "      ,[email] = ?\n"
+                    + "      ,[phone] = ?\n"
+                    + "      ,[role] = ?\n"
+                    + "      ,[password] = ?\n"
+                    + " WHERE id=?";
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.setString(2, address);
+            ps.setString(3, email);
+            ps.setString(4, phone);
+            ps.setString(5, role);
+            ps.setString(6, newPass);
+            ps.setInt(7, id);
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

@@ -4,12 +4,22 @@
  * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-shop-homepage/blob/master/LICENSE)
  */
 body {
-  padding-top: 56px;
+    padding-top: 56px;
 }
 .divider:after,
 .divider:before {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: #eee;
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee;
+}
+li.cha {
+    display: inline-block;
+    position: relative;
+}
+
+ul.subnav {
+    position: absolute;
+    list-style-type: none;
+    left: -22px;
 }

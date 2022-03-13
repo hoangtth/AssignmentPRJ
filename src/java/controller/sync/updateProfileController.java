@@ -5,22 +5,21 @@
  */
 package controller.sync;
 
-import dao.ProductDAO;
-import java.util.List;
-import model.Product;
+import dao.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Image;
+import javax.servlet.http.HttpSession;
+import model.Account;
 
 /**
  *
  * @author Admin
  */
-public class DetailController extends HttpServlet {
+public class updateProfileController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,11 +35,15 @@ public class DetailController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            int productId = Integer.parseInt(request.getParameter("productId"));
-            Product product = new ProductDAO().getProductById(productId);     
-            request.setAttribute("product", product);
-            request.getSession().setAttribute("urlHistory", "detail?productId=" + productId);
-            request.getRequestDispatcher("detail.jsp").forward(request, response);
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet updateProfileController</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet updateProfileController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -56,7 +59,10 @@ public class DetailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        request.setAttribute("account", account);
+        request.getRequestDispatcher("updateProfile.jsp").forward(request, response);
     }
 
     /**
@@ -70,7 +76,30 @@ public class DetailController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        String address = request.getParameter("address");
+        String role = request.getParameter("role");
+        String oldPass = request.getParameter("oldPass");
+        String newPass = request.getParameter("newPass");
+        System.out.println(newPass.length());
+        Account a = (Account) session.getAttribute("account");
+        if (oldPass.length() == 0 || newPass.length() == 0) {
+            new AccountDAO().updateAccount(a.getId(), name, email, phone, address, role);
+            Account account = new AccountDAO().getAccountById(a.getId());
+            session.setAttribute("account", account);
+            response.sendRedirect("profile");
+        } else if (!a.getPassword().equals(oldPass) && newPass.length() != 0) {
+            request.setAttribute("error", "old password is not correct");
+            request.getRequestDispatcher("updateProfile.jsp").forward(request, response);
+        } else {
+            new AccountDAO().updateAccountAndPass(a.getId(), name, email, phone, address, role, newPass);
+            Account account = new AccountDAO().getAccountById(a.getId());
+            session.setAttribute("account", account);
+            response.sendRedirect("profile");
+        }
     }
 
     /**

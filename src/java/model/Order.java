@@ -5,17 +5,21 @@
  */
 package model;
 
+import java.util.List;
+
 /**
  *
  * @author Admin
  */
 public class Order {
+
     private int id;
-    private int accountId ;
+    private int accountId;
     private double totalPrice;
     private String note;
-    private String createdDate ;
+    private String createdDate;
     private int shippingId;
+    private List<OrderDetail> list;
 
     public Order() {
     }
@@ -28,6 +32,18 @@ public class Order {
         this.createdDate = createdDate;
         this.shippingId = shippingId;
     }
+
+    public Order(int id, int accountId, double totalPrice, String note, String createdDate, int shippingId, List<OrderDetail> list) {
+        this.id = id;
+        this.accountId = accountId;
+        this.totalPrice = totalPrice;
+        this.note = note;
+        this.createdDate = createdDate;
+        this.shippingId = shippingId;
+        this.list = list;
+    }
+    
+    
 
     public int getId() {
         return id;
@@ -81,7 +97,5 @@ public class Order {
     public String toString() {
         return "Order{" + "id=" + id + ", accountId=" + accountId + ", totalPrice=" + totalPrice + ", note=" + note + ", createdDate=" + createdDate + ", shippingId=" + shippingId + '}';
     }
-    
-    
-    
+
 }

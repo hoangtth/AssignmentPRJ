@@ -9,16 +9,13 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
+            <ul  class="navbar-nav ml-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="home">Home
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 <c:if test="${sessionScope.account.role eq 'ADMIN'}">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Manager Account</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="manager-product">Manager Product</a>
                     </li>
@@ -33,8 +30,8 @@
                 </li>
                 <c:choose>
                     <c:when test="${sessionScope.account != null}">                  
-                        <li lass="nav-item ml-3">
-                            <a class="nav-link">Hello ${sessionScope.account.displayName}</a>
+                        <li class="cha">
+                            <a href="profile" class="nav-link">Hello ${sessionScope.account.displayName}</a>
                         </li>
                         <li class="nav-item ml-3">
                             <a class="nav-link" href="logout">Logout</a>
