@@ -19,4 +19,23 @@
             </c:if>
         </c:forEach>
     </ul>
+    <div class="row" style="text-align: center; margin-top: 16px">
+        <h4 style="width: 100%">Last Product</h4>
+            <div class="col-lg-12">
+                <div class="card h-100">
+                    <a href="detail?productId=${P.id}"><img class="card-img-top" src="${P.image}" alt=""></a>
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <a href="#">${P.name}</a>
+                        </h4>
+                        <h5>$ ${P.price}</h5>
+                        <p class="card-text">${P.description}</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                    </div>
+                    <a class="btn btn-primary" href="add-to-card?productId=${P.id}">Add To Cart</a>
+                </div>
+            </div>
+    </div>
 </div>

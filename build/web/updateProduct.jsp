@@ -29,56 +29,55 @@
     <body>
 
 
-        <!-- Page Content -->
         <div class="container"  style="margin-bottom: 7rem">
             <div class="row">
                 <div class="col-lg-3"></div>
                 <div class="col-lg-6">
-                    <form action="add-product" method="post">
-                        <h3>Add product</h3>
+                    <form action="update-product" method="post">
+                        <h3>Update product</h3>
+                        <input type="hidden" name="productId" value="${P.id}" />
                         <div class="form-group">
                             <label for="name">name</label>
-                            <input value="${name}" name="name" type="text" class="form-control" id="name" aria-describedby="emailHelp" required>
+                            <input value="${P.name}" name="name" type="text" class="form-control" id="name" aria-describedby="emailHelp" required>
                         </div>
                         <div class="form-group">
                             <label for="code">code</label>
-                            <input value="${code}" name="code" type="text" class="form-control" id="code" required>
+                            <input value="${P.code}" name="code" type="text" class="form-control" id="code" required>
                         </div>
                         <div class="form-group">
                             <label for="quantity">quantity</label>
-                            <input value="${quantity}" name="quantity" type="number" class="form-control" id="quantity" required>
+                            <input value="${P.quantity}" name="quantity" type="number" class="form-control" id="quantity" required>
                         </div>
 
                         <div class="form-group">
                             <label for="price">price</label>
                             <h3 style="color: red">${error}</h3>
-                            <input name="price" type="text" class="form-control" id="price" aria-describedby="emailHelp" required>
+                            <input value="${P.price}" name="price" type="text" class="form-control" id="price" aria-describedby="emailHelp" required>
                         </div>
                         <div class="form-floating">
                             <label for="description">description</label>
-                            <textarea name="description" class="form-control" placeholder="input description" id="description" style="height: 100px">${description}</textarea>
+                            <textarea name="description" class="form-control" placeholder="input description" id="description" style="height: 100px">${P.description}</textarea>
 
                         </div>
                         <div class="form-group">
                             <label for="img">ImageUrl</label>
-                            <input value="${ImageUrl}" name="img" type="text" class="form-control" id="img" required>
+                            <input value="${P.image}" name="img" type="text" class="form-control" id="img" required>
                         </div> 
                         <div class="form-group mb-5">
                             <label for="status">Category: </label>
                             <select name="category">
                                 <c:forEach items="${listCategory}" var="C">
-                                    <option ${C.id == catId?"selected":""} value="${C.id}">${C.categoryName}</option>
+                                    <option ${C.id == P.categoryId?"selected":""} value="${C.id}">${C.categoryName}</option>
                                 </c:forEach>
                             </select>
                         </div>
                         <a href="manager-product" style="margin-left: 5px" class="btn  bg-dark text-white" type="submit">cancel</a>
-                        <button href="add-product" style="margin-left: 5px" class="btn  bg-success text-white" type="submit">Add</button>
+                        <button href="update-product" style="margin-left: 5px" class="btn  bg-success text-white" type="submit">Update</button>
                     </form>
                 </div>
                 <div class="col-lg-3"></div>
             </div>
         </div>
-        <!-- /.container -->
 
 
 

@@ -70,7 +70,7 @@
                         <c:forEach items="${listProduct}" var="P">
                             <div class="col-lg-4 col-md-6 mb-4">
                                 <div class="card h-100">
-                                    <a href="detail?productId=${P.id}"><img class="card-img-top" src="images/${P.image}" alt=""></a>
+                                    <a href="detail?productId=${P.id}"><img class="card-img-top" src="${P.image}" alt=""></a>
                                     <div class="card-body">
                                         <h4 class="card-title">
                                             <a href="#">${P.name}</a>

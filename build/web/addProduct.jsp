@@ -71,7 +71,7 @@
                                 </c:forEach>
                             </select>
                         </div>
-                        <a href="add-product" style="margin-left: 5px" class="btn  bg-dark text-white" type="submit">cancel</a>
+                        <a href="manager-product" style="margin-left: 5px" class="btn  bg-dark text-white" type="submit">cancel</a>
                         <button href="add-product" style="margin-left: 5px" class="btn  bg-success text-white" type="submit">Add</button>
                     </form>
                 </div>

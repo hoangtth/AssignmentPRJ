@@ -72,6 +72,14 @@
         <servlet-name>AddProductController</servlet-name>
         <servlet-class>controller.sync.AddProductController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateProductController</servlet-name>
+        <servlet-class>controller.sync.UpdateProductController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BuyNowController</servlet-name>
+        <servlet-class>controller.sync.BuyNowController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>FilterController</servlet-name>
         <url-pattern>/filter</url-pattern>
@@ -151,6 +159,14 @@
     <servlet-mapping>
         <servlet-name>AddProductController</servlet-name>
         <url-pattern>/add-product</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateProductController</servlet-name>
+        <url-pattern>/update-product</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BuyNowController</servlet-name>
+        <url-pattern>/buy-now</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

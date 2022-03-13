@@ -74,7 +74,7 @@
                             <input type="hidden" name="productId" value="${C.value.product.id}" />
 
                             <td>
-                                <img src="images/${C.value.product.image}" style="width: 100px">
+                                <img src="${C.value.product.image}" style="width: 100px">
                             </td>
                             <td>${C.value.product.name}</td>
                             <td>

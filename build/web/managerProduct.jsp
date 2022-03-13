@@ -14,6 +14,14 @@
         <meta name="author" content="">
 
         <title>Shop Homepage - Start Bootstrap Template</title>
+        
+        <script type="text/javascript">
+            function doDelete(id){
+                if(confirm("are U sure to delete Product with id = "+ id + " ?")){
+                    window.location = "delete-product?productId="+id;
+                }
+            }
+        </script>
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -51,12 +59,12 @@
                             <tr>   
                                 <td>${P.id}</td>
                                 <td>${P.name}</td>
-                                <td><img style="width: 100px" class="card-img-top" src="images/${P.image}" alt=""></td>
+                                <td><img style="width: 100px" class="card-img-top" src="${P.image}" alt=""></td>
                                 <td>${P.price}</td>
                                 <td>
                                     <div  class="d-flex">
-                                        <a href="delete-product?productId=${P.id}" class="btn bg-danger text-white" type="submit">Delete</a>
-                                        <a style="margin-left: 5px" class="btn  bg-success text-white" type="submit">Update</a>
+                                        <a onclick="doDelete(${P.id})" href="#" class="btn bg-danger text-white" type="submit">Delete</a>
+                                        <a href="update-product?productId=${P.id}&pageIndex=${pageIndex}" style="margin-left: 5px" class="btn  bg-success text-white" type="submit">Update</a>
                                     </div>
                                 </td>
                             </tr>

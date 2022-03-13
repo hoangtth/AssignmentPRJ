@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import model.Category;
 import model.Product;
 
 /**
@@ -314,5 +315,55 @@ public class ProductDAO {
         } catch (Exception ex) {
             ex.printStackTrace(System.out);
         }
+    }
+
+    public void updateProductById(Product p) {
+        try {
+            String query = "UPDATE [ShoppingOnline].[dbo].[Product]\n"
+                    + "   SET [categoryId] = ?\n"
+                    + "      ,[code] = ?\n"
+                    + "      ,[name] = ?\n"
+                    + "      ,[quantity] = ?\n"
+                    + "      ,[price] = ?\n"
+                    + "      ,[description] = ?\n"
+                    + "      ,[img] = ?\n"
+                    + " WHERE id=?";
+
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, p.getCategoryId());
+            ps.setString(2, p.getCode());
+            ps.setString(3, p.getName());
+            ps.setInt(4, p.getQuantity());
+            ps.setDouble(5, p.getPrice());
+            ps.setString(6, p.getDescription());
+            ps.setString(7, p.getImage());
+            ps.setInt(8, p.getId());
+
+            ps.executeUpdate();
+
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+    }
+
+    public Product getLatestProduct() {
+        try {
+            String query = "select top 1 * from Product order by id desc ";
+
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                return new Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6),
+                         rs.getString(7),
+                         rs.getString(8),
+                         rs.getDate(9));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return null;
     }
 }

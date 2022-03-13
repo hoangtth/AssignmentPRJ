@@ -40,7 +40,7 @@
                             <div class="preview col-md-6">
 
                                 <div class="preview-pic tab-content">
-                                    <div class="tab-pane active" id="pic-1"><img src="images/${product.image}" /></div>
+                                    <div class="tab-pane active" id="pic-1"><img src="${product.image}" /></div>
                                     <c:forEach items="${listImages}" var="IMG" varStatus="track">
                                         <div class="tab-pane" id="pic-${track.count+2}"><img src="images/${IMG.imageUrl}" /></div>
                                     </c:forEach>
@@ -65,7 +65,7 @@
                                 <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
                                 <div class="action">
                                     <a href="add-to-card?productId=${product.id}" class="add-to-cart btn btn-default" type="button">add to cart</a>
-                                    <a class="like btn btn-default btn-outline-success" style="margin-left: 10px" type="button">Buy Now</a>
+                                    <a href="buy-now?productId=${product.id}" class="like btn btn-default btn-outline-success" style="margin-left: 10px" type="button">Buy Now</a>
                                 </div>
                             </div>
                         </div>
