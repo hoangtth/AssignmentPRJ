@@ -6,22 +6,18 @@
 package controller.sync;
 
 import dao.OrderDAO;
-import java.util.List;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Account;
-import model.Order;
 
 /**
  *
  * @author Admin
  */
-public class HistoryOrdersController extends HttpServlet {
+public class AcceptOrderController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +36,10 @@ public class HistoryOrdersController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HistoryOrdersController</title>");
+            out.println("<title>Servlet AcceptOrderController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet HistoryOrdersController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AcceptOrderController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,18 +57,10 @@ public class HistoryOrdersController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Account a = (Account) session.getAttribute("account");
-        if (a != null && a.getRole().equals(Account.ADMIN)) {
-            List<Order> listOrders = new OrderDAO().getAllOrders();
-            request.setAttribute("listOrders", listOrders);
-            request.getRequestDispatcher("historyOrdersForAdmin.jsp").forward(request, response);
-        } else {
-            List<Order> listOrders = new OrderDAO().getAllOrdersByAccountId(a.getId());
-            request.setAttribute("listOrders", listOrders);
-            request.getRequestDispatcher("historyOrdersForUser.jsp").forward(request, response);
-        }
-
+        int orderId = Integer.parseInt(request.getParameter("orderId"));
+        int status = Integer.parseInt(request.getParameter("status"));
+        new OrderDAO().updateStatusOrderByOrderId(orderId,status);
+        response.sendRedirect("see-detail?orderId=" + orderId);
     }
 
     /**

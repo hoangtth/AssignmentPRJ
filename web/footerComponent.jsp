@@ -58,17 +58,17 @@
 
                                 <ul class="fa-ul" style="margin-left: 1.65em;">
                                     <li class="mb-3">
-                                        <span class="fa-li"><i class="fas fa-home"></i></span><span class="ms-2">New York, NY 10012, US</span>
+                                        <span class="fa-li"><i class="fas fa-home"></i></span><span class="ms-2">462 Bach Mai - Hai Ba Trung - Ha Noi</span>
                                     </li>
                                     <li class="mb-3">
-                                        <span class="fa-li"><i class="fas fa-envelope"></i></span><span class="ms-2">info@example.com</span>
+                                        <span class="fa-li"><i class="fas fa-envelope"></i></span><span class="ms-2">hoangtthe153437@fpt.edu.vn</span>
                                     </li>
                                     <li class="mb-3">
-                                        <span class="fa-li"><i class="fas fa-phone"></i></span><span class="ms-2">+ 01 234 567 88</span>
+                                        <span class="fa-li"><i class="fas fa-phone"></i></span><span class="ms-2">0826219183</span>
                                     </li>
-                                    <li class="mb-3">
+<!--                                    <li class="mb-3">
                                         <span class="fa-li"><i class="fas fa-print"></i></span><span class="ms-2">+ 01 234 567 89</span>
-                                    </li>
+                                    </li>-->
                                 </ul>
                             </div>
                             <!--Grid column-->

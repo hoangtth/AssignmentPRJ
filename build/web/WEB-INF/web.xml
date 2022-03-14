@@ -92,6 +92,14 @@
         <servlet-name>HistoryOrdersController</servlet-name>
         <servlet-class>controller.sync.HistoryOrdersController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SeeDetailController</servlet-name>
+        <servlet-class>controller.sync.SeeDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AcceptOrderController</servlet-name>
+        <servlet-class>controller.sync.AcceptOrderController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>FilterController</servlet-name>
         <url-pattern>/filter</url-pattern>
@@ -191,6 +199,14 @@
     <servlet-mapping>
         <servlet-name>HistoryOrdersController</servlet-name>
         <url-pattern>/history-orders</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SeeDetailController</servlet-name>
+        <url-pattern>/see-detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AcceptOrderController</servlet-name>
+        <url-pattern>/accept-order</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -14,11 +14,11 @@
         <meta name="author" content="">
 
         <title>Shop Homepage - Start Bootstrap Template</title>
-        
+
         <script type="text/javascript">
-            function doDelete(id){
-                if(confirm("are U sure to delete Product with id = "+ id + " ?")){
-                    window.location = "delete-product?productId="+id;
+            function doDelete(id) {
+                if (confirm("are U sure to delete Product with id = " + id + " ?")) {
+                    window.location = "delete-product?productId=" + id;
                 }
             }
         </script>
@@ -32,13 +32,16 @@
 
     </head>
 
-    <body>
+    <body style="padding-top: 0">
         <!--container-->
         <div class="container" style="margin-bottom: 7rem">
             <div class="mt-3">
                 <nav class="navbar navbar-light bg-light">
                     <div class="container-fluid">
                         <a class="navbar-brand">Manager Product</a>
+                        <div style="margin-right: 500px">
+                            <a href="home" class="btn  bg-success text-white" type="submit">Back to home</a>
+                        </div>
                         <div class="d-flex">
                             <a href="add-product" style="margin-left: 5px" class="btn  bg-success text-white" type="submit">Add new product</a>
                         </div>
@@ -71,16 +74,14 @@
                         </c:forEach>
                     </tbody>
                 </table>
-                <div>
-                    <a href="home" class="btn  bg-success text-white" type="submit">Back to home</a>
-                </div>
+
                 <nav style="float: right" class="float-end" aria-label="Page navigation example">
                     <ul class="pagination">
                         <li class="page-item ${pageIndex==1?"disabled":""}"><a class="page-link" href="manager-product?pageIndex=${pageIndex-1}">Previous</a></li>
                             <c:forEach begin="1" end="${totalPage}" var="i">
                             <li class="page-item ${pageIndex == i?"active":""}"><a class="page-link" href="manager-product?pageIndex=${i}">${i}</a></li>                        
                             </c:forEach>
-                        <li class="page-item ${pageIndex==3?"disabled":""}"><a class="page-link" href="manager-product?pageIndex=${pageIndex-1}">Next</a></li>
+                        <li class="page-item ${pageIndex==totalPage?"disabled":""}"><a class="page-link" href="manager-product?pageIndex=${pageIndex+1}">Next</a></li>
                     </ul>
                 </nav>
             </div>

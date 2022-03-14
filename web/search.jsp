@@ -28,7 +28,7 @@
         <%@include file="NavComponent.jsp" %>
 
         <!-- Page Content -->
-        <div class="container">
+        <div class="container mb-4">
 
             <div class="row">
 
@@ -125,12 +125,7 @@
         <!-- /.container -->
 
         <!-- Footer -->
-        <footer class="py-5 bg-dark">
-            <div class="container">
-                <p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p>
-            </div>
-            <!-- /.container -->
-        </footer>
+        <%@include file="footerComponent.jsp" %>
 
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>

@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Order;
 import model.OrderDetail;
+import model.Shipping;
 
 /**
  *
@@ -49,14 +50,14 @@ public class OrderDAO {
                 return rs.getInt(1);
             }
         } catch (Exception ex) {
-            Logger.getLogger(ShippingDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
     }
 
     public List<Order> getAllOrdersByAccountId(int accountId) {
         try {
-            String query = " select * from Orders where account_id=?";
+            String query = " select * from Orders where account_id=? order by id desc";
 
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
@@ -66,7 +67,7 @@ public class OrderDAO {
             while (rs.next()) {
                 List<OrderDetail> listOrderDetails = new OrderDetailDAO().getAllOrderDetailsByOrderId(rs.getInt(1));
                 Order order = new Order(rs.getInt(1), rs.getInt(2), rs.getDouble(3),
-                        rs.getString(4), rs.getString(5), rs.getInt(6), listOrderDetails);
+                        rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), listOrderDetails);
                 listOrders.add(order);
             }
             return listOrders;
@@ -75,10 +76,70 @@ public class OrderDAO {
         }
         return null;
     }
-    
-    public static void main(String[] args) {
-        List<Order> l = new OrderDAO().getAllOrdersByAccountId(1);
-        System.out.println(l.get(0).getList().get(0).getProductName());
+
+    public List<Order> getAllOrders() {
+        try {
+            String query = "  select Orders.*, Account.displayName from Orders join Account "
+                    + "on Orders.account_id = Account.id order by id desc ";
+
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            List<Order> listOrders = new ArrayList<>();
+            while (rs.next()) {
+                List<OrderDetail> listOrderDetails = new OrderDetailDAO().getAllOrderDetailsByOrderId(rs.getInt(1));
+                Order order = new Order(rs.getInt(1), rs.getInt(2), rs.getDouble(3),
+                        rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getString(8), listOrderDetails);
+                listOrders.add(order);
+            }
+            return listOrders;
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return null;
+    }
+
+    public List<Order> getAllOrdersByOrderId(int orderId) {
+        try {
+            String query = "select * from Orders where id=?";
+
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, orderId);
+            rs = ps.executeQuery();
+            List<Order> listOrders = new ArrayList<>();
+            while (rs.next()) {
+                List<OrderDetail> listOrderDetails = new OrderDetailDAO().getAllOrderDetailsByOrderId(rs.getInt(1));
+                Shipping shipping = new ShippingDAO().getShippingByShippingId(rs.getInt(6));
+                Order order = new Order(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getDouble(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getInt(7), shipping, listOrderDetails);
+                listOrders.add(order);
+            }
+            return listOrders;
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return null;
+    }
+
+    public void updateStatusOrderByOrderId(int orderId, int status) {
+        try {
+            String sql = "UPDATE [ShoppingOnline].[dbo].[Orders]\n"
+                    + "   SET [status] = ?\n"
+                    + " WHERE id= ?";
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, status);
+            ps.setInt(2, orderId);
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

@@ -19,6 +19,9 @@ public class Order {
     private String note;
     private String createdDate;
     private int shippingId;
+    private int status;
+    private String accountName;
+    private Shipping shipping;
     private List<OrderDetail> list;
 
     public Order() {
@@ -33,17 +36,50 @@ public class Order {
         this.shippingId = shippingId;
     }
 
-    public Order(int id, int accountId, double totalPrice, String note, String createdDate, int shippingId, List<OrderDetail> list) {
+    public Order(int id, int accountId, double totalPrice, String note, String createdDate, int shippingId, int status, List<OrderDetail> list) {
         this.id = id;
         this.accountId = accountId;
         this.totalPrice = totalPrice;
         this.note = note;
         this.createdDate = createdDate;
         this.shippingId = shippingId;
+        this.status = status;
+        this.list = list;
+    }
+
+    public Order(int id, int accountId, double totalPrice, String note, String createdDate, int shippingId, int status, String accountName, List<OrderDetail> list) {
+        this.id = id;
+        this.accountId = accountId;
+        this.totalPrice = totalPrice;
+        this.note = note;
+        this.createdDate = createdDate;
+        this.shippingId = shippingId;
+        this.status = status;
+        this.accountName = accountName;
+        this.list = list;
+    }
+
+    public Order(int id, int accountId, double totalPrice, String note, String createdDate, int shippingId, int status, Shipping shipping, List<OrderDetail> list) {
+        this.id = id;
+        this.accountId = accountId;
+        this.totalPrice = totalPrice;
+        this.note = note;
+        this.createdDate = createdDate;
+        this.shippingId = shippingId;
+        this.status = status;
+        this.shipping = shipping;
         this.list = list;
     }
     
     
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
 
     public int getId() {
         return id;
@@ -100,11 +136,23 @@ public class Order {
     public void setList(List<OrderDetail> list) {
         this.list = list;
     }
-    
 
-    @Override
-    public String toString() {
-        return "Order{" + "id=" + id + ", accountId=" + accountId + ", totalPrice=" + totalPrice + ", note=" + note + ", createdDate=" + createdDate + ", shippingId=" + shippingId + '}';
+    public int getStatus() {
+        return status;
     }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public Shipping getShipping() {
+        return shipping;
+    }
+
+    public void setShipping(Shipping shipping) {
+        this.shipping = shipping;
+    }
+    
+    
 
 }
