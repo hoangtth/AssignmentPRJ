@@ -7,6 +7,7 @@ package controller.sync;
 
 import dao.OrderDAO;
 import dao.OrderDetailDAO;
+import dao.ProductDAO;
 import dao.ShippingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -125,6 +126,14 @@ public class CheckOutController extends HttpServlet {
 
         //Orderdetail to database
         new OrderDetailDAO().saveCart(orderID, carts);
+
+        // update lại quantity trong Product  = tống số sản phẩm trừ đi số lượng đã bán
+        for (Map.Entry<Integer, Cart> entry : carts.entrySet()) {
+            Integer productId = entry.getKey();
+            Cart cart = entry.getValue();
+            new ProductDAO().updateQuantityProduct(productId,cart.getQuantity());
+        }
+
         session.removeAttribute("carts");
         response.sendRedirect("TheEnd");
     }

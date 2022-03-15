@@ -357,13 +357,30 @@ public class ProductDAO {
 
             while (rs.next()) {
                 return new Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6),
-                         rs.getString(7),
-                         rs.getString(8),
-                         rs.getDate(9));
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getDate(9));
             }
         } catch (Exception ex) {
             ex.printStackTrace(System.out);
         }
         return null;
+    }
+
+    public void updateQuantityProduct(int productId, int quantityOfCart) {
+        try {
+            String query = "UPDATE [ShoppingOnline].[dbo].[Product]\n"
+                    + "   SET [quantity] = quantity - ?\n"
+                    + " WHERE id=?";
+
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, quantityOfCart);
+            ps.setInt(2, productId);
+            ps.executeUpdate();
+
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
     }
 }

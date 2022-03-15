@@ -79,7 +79,15 @@
                                     <div class="card-footer">
                                         <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
                                     </div>
-                                    <a class="btn btn-primary" href="add-to-card?productId=${P.id}">Add To Cart</a>
+                                    <c:choose>
+                                        <c:when test="${P.quantity==0}">
+                                            <a class="btn btn-danger" >Sold out</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a class="btn btn-primary" href="add-to-card?productId=${P.id}">Add To Cart</a>
+                                        </c:otherwise>
+                                    </c:choose>
+
                                 </div>
                             </div>
                         </c:forEach>

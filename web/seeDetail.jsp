@@ -98,6 +98,14 @@
                                                         ${O.createdDate}
                                                     </div>
                                                 </div>
+                                                <div class="row mb-3">
+                                                    <div class="col-sm-4">
+                                                        <h6 class="mb-0">Note</h6>
+                                                    </div>
+                                                    <div class="col-sm-8 text-secondary">
+                                                        ${O.note}
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <c:choose>

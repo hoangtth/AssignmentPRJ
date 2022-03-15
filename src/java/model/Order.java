@@ -22,6 +22,7 @@ public class Order {
     private int status;
     private String accountName;
     private Shipping shipping;
+    private Account account;
     private List<OrderDetail> list;
 
     public Order() {
@@ -59,7 +60,7 @@ public class Order {
         this.list = list;
     }
 
-    public Order(int id, int accountId, double totalPrice, String note, String createdDate, int shippingId, int status, Shipping shipping, List<OrderDetail> list) {
+    public Order(int id, int accountId, double totalPrice, String note, String createdDate, int shippingId, int status, Shipping shipping,Account account ,List<OrderDetail> list) {
         this.id = id;
         this.accountId = accountId;
         this.totalPrice = totalPrice;
@@ -68,6 +69,7 @@ public class Order {
         this.shippingId = shippingId;
         this.status = status;
         this.shipping = shipping;
+        this.account = account;
         this.list = list;
     }
     
