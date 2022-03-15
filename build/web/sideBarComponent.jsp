@@ -19,23 +19,45 @@
             </c:if>
         </c:forEach>
     </ul>
+
+    <form action="price-filter">
+        <ul class="list-group mt-4 mb-4">
+            PRICE
+            <li class="list-group-item">
+                <input ${price==null?"checked":""} onclick="this.form.submit()"  name="price" class="form-check-input me-1" type="radio" value="0" aria-label="...">
+                All products
+            </li>
+            <li class="list-group-item">
+                <input ${price==1?"checked":""} onclick="this.form.submit()"  name="price" class="form-check-input me-1" type="radio" value="1" aria-label="...">
+                under 50$
+            </li>
+            <li class="list-group-item">
+                <input ${price==2?"checked":""} onclick="this.form.submit()" name="price" class="form-check-input me-1" type="radio" value="2" aria-label="...">
+                50$ -100$
+            </li>
+            <li class="list-group-item">
+                <input ${price==3?"checked":""} onclick="this.form.submit()" name="price" class="form-check-input me-1" type="radio" value="3" aria-label="...">
+                over $100
+            </li>
+        </ul>
+    </form>
     <div class="row" style="text-align: center; margin-top: 16px">
-        <h4 style="width: 100%">Last Product</h4>
-            <div class="col-lg-12">
-                <div class="card h-100">
-                    <a href="detail?productId=${P.id}"><img class="card-img-top" src="${P.image}" alt=""></a>
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <a href="#">${P.name}</a>
-                        </h4>
-                        <h5>$ ${P.price}</h5>
-                        <p class="card-text">${P.description}</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                    </div>
-                    <a class="btn btn-primary" href="add-to-card?productId=${P.id}">Add To Cart</a>
+        <h4 style="width: 100%">New Product</h4>
+        <div class="col-lg-12">
+            <div class="card h-100">
+                <a href="detail?productId=${P.id}"><img class="card-img-top" src="${P.image}" alt=""></a>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="#">${P.name}</a>
+                    </h4>
+                    <h5>$ ${P.price}</h5>
+                    <p class="card-text">${P.description}</p>
                 </div>
+                <div class="card-footer">
+                    <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                </div>
+                <a class="btn btn-primary" href="add-to-card?productId=${P.id}">Add To Cart</a>
             </div>
+        </div>
     </div>
 </div>

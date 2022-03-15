@@ -104,6 +104,10 @@
         <servlet-name>ManagerAccountController</servlet-name>
         <servlet-class>controller.sync.ManagerAccountController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PriceFilterController</servlet-name>
+        <servlet-class>controller.sync.PriceFilterController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>FilterController</servlet-name>
         <url-pattern>/filter</url-pattern>
@@ -207,6 +211,10 @@
     <servlet-mapping>
         <servlet-name>ManagerAccountController</servlet-name>
         <url-pattern>/manager-account</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PriceFilterController</servlet-name>
+        <url-pattern>/price-filter</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

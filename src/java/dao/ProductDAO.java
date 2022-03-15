@@ -383,4 +383,90 @@ public class ProductDAO {
             ex.printStackTrace(System.out);
         }
     }
+
+    public int getMaxPrice() {
+        try {
+            String query = "select MAX(price) from Product";
+
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return 0;
+    }
+
+    public List<Product> getAllPaggingWhenFilter(int pageIndex, int pageSize, int from, int to) {
+        try {
+            String query = "SELECT * FROM (\n"
+                    + "  SELECT Product.*, \n"
+                    + "    ROW_NUMBER() OVER (ORDER BY id ASC) AS RN\n"
+                    + "  FROM Product where price between ? and ?\n"
+                    + ") AS X\n"
+                    + "WHERE RN > ?*?-?\n"
+                    + "AND RN <= ?*?-?";
+
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, from);
+            ps.setInt(2, to);
+            ps.setInt(3, pageIndex);
+            ps.setInt(4, pageSize);
+            ps.setInt(5, pageSize);
+            ps.setInt(6, pageIndex + 1);
+            ps.setInt(7, pageSize);
+            ps.setInt(8, pageSize);
+            rs = ps.executeQuery();
+
+            List<Product> list = new ArrayList<>();
+            while (rs.next()) {
+                Product P = new Product(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getInt(5),
+                        rs.getDouble(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getDate(9));
+
+                list.add(P);
+            }
+            return list;
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return null;
+    }
+
+    public int countPageWhenFilterPrice(int pageSize, int from, int to) {
+        try {
+            String query = "select COUNT(*) from Product where price between ? and ?";
+
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+
+            ps.setInt(1, from);
+            ps.setInt(2, to);
+            rs = ps.executeQuery();
+
+            int count = 0;
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+            int numOfPage = count / pageSize;
+            if (count % pageSize != 0) {
+                numOfPage++;
+            }
+            return numOfPage;
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return 0;
+    }
 }

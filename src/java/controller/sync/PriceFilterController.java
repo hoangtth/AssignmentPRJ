@@ -5,24 +5,24 @@
  */
 package controller.sync;
 
-import model.Product;
 import dao.CategoryDAO;
 import dao.ProductDAO;
-import java.util.List;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Category;
+import model.Product;
 
 /**
  *
  * @author Admin
  */
-public class HomeController extends HttpServlet {
+public class PriceFilterController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +41,10 @@ public class HomeController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomeController</title>");
+            out.println("<title>Servlet PriceFilterController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet HomeController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet PriceFilterController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,26 +63,47 @@ public class HomeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int pageIndex = 1;
-        final int PAGE_SIZE = 6;
+        final int PAGE_SIZE = 3;
 
         String raw_page = request.getParameter("pageIndex");
         if (raw_page != null) {
             pageIndex = Integer.parseInt(raw_page);
         }
-
         Product p = new ProductDAO().getLatestProduct();
-        List<Category> listCategory = new CategoryDAO().getAll();
-        List<Product> listProduct = new ProductDAO().getAllPagging(pageIndex, PAGE_SIZE);
-        int totalPage = new ProductDAO().countPage(PAGE_SIZE);
-        HttpSession session = request.getSession();
-        session.setAttribute("listCategory", listCategory);
 
+        int price = Integer.parseInt(request.getParameter("price"));
+        int from = 0;
+        int to = 0;
+        switch (price) {
+            case 0:
+                response.sendRedirect("home");
+                return;
+            case 1:
+                from = 0;
+                to = 49;
+                break;
+            case 2:
+                from = 50;
+                to = 99;
+                break;
+            default:
+                from = 100;
+                to = new ProductDAO().getMaxPrice();
+                break;
+        }
+        List<Category> listCategory = new CategoryDAO().getAll();
+        List<Product> listProduct = new ProductDAO().getAllPaggingWhenFilter(pageIndex, PAGE_SIZE, from, to);
+        int totalPage = new ProductDAO().countPageWhenFilterPrice(PAGE_SIZE, from, to);
+        HttpSession session = request.getSession();
+
+        session.setAttribute("listCategory", listCategory);
         request.setAttribute("pageIndex", pageIndex);
         request.setAttribute("listProduct", listProduct);
         request.getSession().setAttribute("P", p);
+        request.setAttribute("price", price);
         request.setAttribute("totalPage", totalPage);
-        session.setAttribute("urlHistory", "home?pageIndex="+pageIndex);
-        request.getRequestDispatcher("home.jsp").forward(request, response);
+        session.setAttribute("urlHistory", "price-filter?pageIndex=" + pageIndex +"&price="+ price);
+        request.getRequestDispatcher("filterPrice.jsp").forward(request, response);
     }
 
     /**

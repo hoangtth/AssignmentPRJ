@@ -108,7 +108,7 @@
                                         </li>
                                     </c:when>
                                     <c:otherwise>
-                                        <li class="page-item"><a class="page-link" href="home?pageIndex=${i}">${i}</a></li>
+                                        <li class="page-item"><a class="page-link" href="price-filter?pageIndex=${i}&price=${price}">${i}</a></li>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:forEach>

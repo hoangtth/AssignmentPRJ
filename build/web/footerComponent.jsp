@@ -31,7 +31,7 @@
             <div>
                 <footer class="text-white text-center text-lg-start" style="background-color: #23242a;">
                     <!-- Grid container -->
-                    <div class="container p-4">
+                    <div class="container p-4 mt-5">
                         <!--Grid row-->
                         <div class="row mt-4">
                             <!--Grid column-->
