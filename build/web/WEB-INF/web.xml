@@ -100,6 +100,10 @@
         <servlet-name>AcceptOrderController</servlet-name>
         <servlet-class>controller.sync.AcceptOrderController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ManagerAccountController</servlet-name>
+        <servlet-class>controller.sync.ManagerAccountController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>FilterController</servlet-name>
         <url-pattern>/filter</url-pattern>
@@ -152,14 +156,6 @@
         <servlet-name>AdminController</servlet-name>
         <url-pattern>/admin/dashboard</url-pattern>
     </servlet-mapping>
-    <filter-mapping>
-        <filter-name>AuthenticationFilter</filter-name>
-        <url-pattern/>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>AuthorizationFilter</filter-name>
-        <url-pattern/>
-    </filter-mapping>
     <servlet-mapping>
         <servlet-name>AddToCartAsyncController</servlet-name>
         <url-pattern>/add-to-cart-async</url-pattern>
@@ -207,6 +203,10 @@
     <servlet-mapping>
         <servlet-name>AcceptOrderController</servlet-name>
         <url-pattern>/accept-order</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManagerAccountController</servlet-name>
+        <url-pattern>/manager-account</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

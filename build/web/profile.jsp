@@ -61,7 +61,9 @@
                                     <div class="mt-3">
                                         <h4>${account.displayName}</h4>
                                         <a href="history-orders" class="btn btn-primary">History</a>
-                                        <a href="updateProfile" class="btn btn-outline-primary">Setting</a>
+                                        <a href="updateProfile" class="btn btn-primary">Setting</a>
+                                        <a href="logout" class="btn btn-primary">Logout</a>
+
                                     </div>
                                 </div>
                                 <hr class="my-4">

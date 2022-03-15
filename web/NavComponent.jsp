@@ -19,6 +19,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="manager-product">Manager Product</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="manager-account">Manager Account</a>
+                    </li>
                 </c:if>
                 <li class="nav-item">
                     <div class="d-flex">
@@ -32,9 +35,6 @@
                     <c:when test="${sessionScope.account != null}">                  
                         <li class="active">
                             <a href="profile" class="nav-link">Hello ${sessionScope.account.displayName}</a>
-                        </li>
-                        <li class="nav-item ml-3 active">
-                            <a class="nav-link" href="logout">Logout</a>
                         </li>
                     </c:when>
                     <c:otherwise>

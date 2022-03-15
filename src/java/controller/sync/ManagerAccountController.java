@@ -5,18 +5,22 @@
  */
 package controller.sync;
 
+import dao.AccountDAO;
+import java.util.List;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.Account;
 
 /**
  *
  * @author Admin
  */
-public class AdminController extends HttpServlet {
+public class ManagerAccountController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,7 +36,15 @@ public class AdminController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            request.getRequestDispatcher("../dashboard.jsp").forward(request, response);
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ManagerAccountController</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ManagerAccountController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -48,7 +60,22 @@ public class AdminController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int pageIndex = 1;
+        final int PAGE_SIZE = 3;
+
+        String raw_page = request.getParameter("pageIndex");
+        if (raw_page != null) {
+            pageIndex = Integer.parseInt(raw_page);
+        }
+        
+        List<Account> listAccounts = new AccountDAO().getAccountsUserAndPagging(pageIndex,PAGE_SIZE);
+        int totalPage = new AccountDAO().countPage(PAGE_SIZE);
+
+        request.setAttribute("pageIndex", pageIndex);
+        request.setAttribute("totalPage", totalPage);
+        request.setAttribute("listAccounts", listAccounts);
+        request.getSession().setAttribute("urlUpdateAccount", "manager-account?pageIndex=" + pageIndex);
+        request.getRequestDispatcher("managerAccount.jsp").forward(request, response);
     }
 
     /**
@@ -62,7 +89,17 @@ public class AdminController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        int accountId = Integer.parseInt(request.getParameter("accountId"));
+        new AccountDAO().updateAccountRoleByID(accountId);
+        
+        HttpSession session = request.getSession();
+        String urlUpdateAccount = (String) session.getAttribute("urlUpdateAccount");
+        if (urlUpdateAccount == null) {
+            urlUpdateAccount = "manager-account";
+        }
+        response.sendRedirect(urlUpdateAccount);
     }
 
     /**

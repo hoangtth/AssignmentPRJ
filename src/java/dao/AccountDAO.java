@@ -273,4 +273,76 @@ public class AccountDAO {
         AccountDAO.send(emailCus, subject, message, accountAdmin.getEmail(), accountAdmin.getPassEmail());
     }
 
+    public List<Account> getAccountsUserAndPagging(int pageIndex, int pageSize) {
+        try {
+            String query = "SELECT * FROM (\n"
+                    + "  SELECT Account.*, \n"
+                    + "    ROW_NUMBER() OVER (ORDER BY id ASC) AS RN\n"
+                    + "  FROM Account where role='USER'\n"
+                    + ") as X\n"
+                    + "WHERE RN > ?*?-?\n"
+                    + "AND RN <= ?*?-?";
+
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, pageIndex);
+            ps.setInt(2, pageSize);
+            ps.setInt(3, pageSize);
+            ps.setInt(4, pageIndex + 1);
+            ps.setInt(5, pageSize);
+            ps.setInt(6, pageSize);
+            rs = ps.executeQuery();
+
+            List<Account> list = new ArrayList<>();
+            while (rs.next()) {
+                Account account = Account.builder().id(rs.getInt(1)).username(rs.getString(2))
+                        .displayName(rs.getString(4)).address(rs.getString(5))
+                        .email(rs.getString(6)).phone(rs.getString(7)).role(rs.getString(8)).build();
+
+                list.add(account);
+            }
+            return list;
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return null;
+    }
+
+    public int countPage(int pageSize) {
+        try {
+            String query = "select Count(*) from Account where role='USER'";
+
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+
+            int count = 0;
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+            int numOfPage = count / pageSize;
+            if (count % pageSize != 0) {
+                numOfPage++;
+            }
+            return numOfPage;
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return 0;
+    }
+
+    public void updateAccountRoleByID(int accountId) {
+        try {
+            String sql = "UPDATE [ShoppingOnline].[dbo].[Account]\n"
+                    + "   SET [role] = 'ADMIN'\n"
+                    + " WHERE id=?";
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, accountId);
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }
