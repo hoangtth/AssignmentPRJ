@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Account;
 import model.Order;
 import model.OrderDetail;
 import model.Shipping;
@@ -99,7 +100,7 @@ public class OrderDAO {
         return null;
     }
 
-    public List<Order> getAllOrdersByOrderId(int orderId) {
+    public Order getAllOrdersByOrderId(int orderId) {
         try {
             String query = "select * from Orders where id=?";
 
@@ -107,20 +108,18 @@ public class OrderDAO {
             ps = conn.prepareStatement(query);
             ps.setInt(1, orderId);
             rs = ps.executeQuery();
-            List<Order> listOrders = new ArrayList<>();
             while (rs.next()) {
                 List<OrderDetail> listOrderDetails = new OrderDetailDAO().getAllOrderDetailsByOrderId(rs.getInt(1));
                 Shipping shipping = new ShippingDAO().getShippingByShippingId(rs.getInt(6));
-                Order order = new Order(rs.getInt(1),
+                Account account = new AccountDAO().getAccountById(rs.getInt(2));
+                return new Order(rs.getInt(1),
                         rs.getInt(2),
                         rs.getDouble(3),
                         rs.getString(4),
                         rs.getString(5),
                         rs.getInt(6),
-                        rs.getInt(7), shipping, listOrderDetails);
-                listOrders.add(order);
+                        rs.getInt(7), shipping,account,listOrderDetails);
             }
-            return listOrders;
         } catch (Exception ex) {
             ex.printStackTrace(System.out);
         }

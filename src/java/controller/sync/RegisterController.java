@@ -78,6 +78,7 @@ public class RegisterController extends HttpServlet {
         String password = request.getParameter("password");
         String repass = request.getParameter("repass");
         String email = request.getParameter("email");
+        String passEmail = request.getParameter("passEmail");
         String phone = request.getParameter("phone");
         String address = request.getParameter("address");
         String displayname = request.getParameter("displayname");
@@ -100,6 +101,7 @@ public class RegisterController extends HttpServlet {
                         .email(email)
                         .phone(phone)
                         .address(address)
+                        .passEmail(passEmail)
                         .build();
                 accountDAO.Register(account);
                 request.setAttribute("success", "Register successful");

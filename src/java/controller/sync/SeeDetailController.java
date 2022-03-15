@@ -60,8 +60,8 @@ public class SeeDetailController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int orderId = Integer.parseInt(request.getParameter("orderId"));
-        List<Order> listOrders = new OrderDAO().getAllOrdersByOrderId(orderId);
-        request.setAttribute("listOrders", listOrders);
+        Order order = new OrderDAO().getAllOrdersByOrderId(orderId);
+        request.setAttribute("O", order);
         request.getRequestDispatcher("seeDetail.jsp").forward(request, response);
     }
 

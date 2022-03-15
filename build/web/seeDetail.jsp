@@ -32,98 +32,115 @@
                             <div class="card-body text-black">
                                 <a style="font-size: 20px" href="history-orders"><i class="fas fa-angle-left me-2"></i>Back to history orders</a>
                                 <div class="row">
-                                    <c:forEach items="${listOrders}" var="O">
-                                        <div class="col-lg-6 px-5 py-4">
+                                    <div class="col-lg-6 px-5 py-4">
 
-                                            <h3 class="mb-5 pt-2 text-center fw-bold text-uppercase">products</h3>
-                                            <c:forEach items="${O.list}" var="OD">
-                                                <div class="d-flex align-items-center mb-5">
-                                                    <div class="flex-shrink-0">
-                                                        <img src="${OD.productImg}"
-                                                             class="img-fluid" style="width: 150px;" alt="Generic placeholder image">
-                                                    </div>
-                                                    <div class="flex-grow-1 ms-3">
-                                                        <h5 class="text-primary">${OD.productName}</h5>
-                                                        <div class="d-flex align-items-center">
-                                                            <p class="fw-bold mb-0 me-5 pe-3">$${OD.productPrice}</p>
-                                                            <div  class="mx-5">
-                                                                Quantity: ${OD.quantity}
-                                                            </div>
+                                        <h3 class="mb-5 pt-2 text-center fw-bold text-uppercase">products</h3>
+                                        <c:forEach items="${O.list}" var="OD">
+                                            <div class="d-flex align-items-center mb-5">
+                                                <div class="flex-shrink-0">
+                                                    <img src="${OD.productImg}"
+                                                         class="img-fluid" style="width: 150px;" alt="Generic placeholder image">
+                                                </div>
+                                                <div class="flex-grow-1 ms-3">
+                                                    <h5 class="text-primary">${OD.productName}</h5>
+                                                    <div class="d-flex align-items-center">
+                                                        <p class="fw-bold mb-0 me-5 pe-3">$${OD.productPrice}</p>
+                                                        <div  class="mx-5">
+                                                            Quantity: ${OD.quantity}
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </c:forEach>
-                                            <hr class="mb-4" style="height: 2px; background-color: #1266f1; opacity: 1;">
-
-                                            <div class="d-flex justify-content-between p-2 mb-2" style="background-color: #e1f5fe;">
-                                                <h5 class="fw-bold mb-0">Total:</h5>
-                                                <h5 class="fw-bold mb-0">$${O.totalPrice}</h5>
                                             </div>
+                                        </c:forEach>
+                                        <hr class="mb-4" style="height: 2px; background-color: #1266f1; opacity: 1;">
 
+                                        <div class="d-flex justify-content-between p-2 mb-2" style="background-color: #e1f5fe;">
+                                            <h5 class="fw-bold mb-0">Total:</h5>
+                                            <h5 class="fw-bold mb-0">$${O.totalPrice}</h5>
                                         </div>
-                                        <div class="col-lg-6 px-5 py-4">
 
-                                            <h3 class="mb-5 pt-2 text-center fw-bold text-uppercase">Information of Customer</h3>
+                                    </div>
+                                    <div class="col-lg-6 px-5 py-4">
 
-                                            <div class="card-body">
-                                                <div class="row mb-3">
-                                                    <div class="col-sm-4">
-                                                        <h6 class="mb-0">Name</h6>
-                                                    </div>
-                                                    <div class="col-sm-8 text-secondary">
-                                                        ${O.shipping.name}
-                                                    </div>
+                                        <h3 class="mb-5 pt-2 text-center fw-bold text-uppercase">Information of Customer</h3>
+
+                                        <div class="card-body">
+                                            <div class="row mb-3">
+                                                <div class="col-sm-4">
+                                                    <h6 class="mb-0">Name</h6>
                                                 </div>
-                                                <div class="row mb-3">
-                                                    <div class="col-sm-4">
-                                                        <h6 class="mb-0">Phone</h6>
-                                                    </div>
-                                                    <div class="col-sm-8 text-secondary">
-                                                        ${O.shipping.phone}
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-3">
-                                                    <div class="col-sm-4">
-                                                        <h6 class="mb-0">Address</h6>
-                                                    </div>
-                                                    <div class="col-sm-8 text-secondary">
-                                                        ${O.shipping.address}
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-3">
-                                                    <div class="col-sm-4">
-                                                        <h6 class="mb-0">Created date</h6>
-                                                    </div>
-                                                    <div class="col-sm-8 text-secondary">
-                                                        ${O.createdDate}
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-3">
-                                                    <div class="col-sm-4">
-                                                        <h6 class="mb-0">Note</h6>
-                                                    </div>
-                                                    <div class="col-sm-8 text-secondary">
-                                                        ${O.note}
-                                                    </div>
+                                                <div class="col-sm-8 text-secondary">
+                                                    ${O.shipping.name}
                                                 </div>
                                             </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-4">
+                                                    <h6 class="mb-0">Phone</h6>
+                                                </div>
+                                                <div class="col-sm-8 text-secondary">
+                                                    ${O.shipping.phone}
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-4">
+                                                    <h6 class="mb-0">Email</h6>
+                                                </div>
+                                                <div class="col-sm-8 text-secondary">
+                                                    ${O.account.email}
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-4">
+                                                    <h6 class="mb-0">Address</h6>
+                                                </div>
+                                                <div class="col-sm-8 text-secondary">
+                                                    ${O.shipping.address}
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-4">
+                                                    <h6 class="mb-0">Created date</h6>
+                                                </div>
+                                                <div class="col-sm-8 text-secondary">
+                                                    ${O.createdDate}
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-4">
+                                                    <h6 class="mb-0">Note</h6>
+                                                </div>
+                                                <div class="col-sm-8 text-secondary">
+                                                    ${O.note}
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                            <c:choose>
-                                                <c:when test="${O.status == 1}">
-                                                    <a href="accept-order?orderId=${O.id}&status=0" type="button" class="btn btn-outline-success btn-block btn-lg">
+                                        <c:choose>
+                                            <c:when test="${O.status == 1}">
+                                                <form action="accept-order">
+                                                    <input type="hidden" name="orderId" value="${O.id}" />
+                                                    <input type="hidden" name="email" value="${O.account.email}" />
+                                                    <input type="hidden" name="status" value="0" />
+                                                    <button type="submit" class="btn btn-outline-success btn-block btn-lg">
                                                         checked <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
                                                         <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
                                                         </svg>
-                                                    </a>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <a href="accept-order?orderId=${O.id}&status=1" type="button" class="btn btn-primary btn-block btn-lg">
+                                                    </button>
+                                                </form> 
+
+                                            </c:when>
+                                            <c:otherwise>
+                                                <form action="accept-order" method="POST">
+                                                    <input type="hidden" name="orderId" value="${O.id}" />
+                                                    <input type="hidden" name="email" value="${O.account.email}" />
+                                                    <input type="hidden" name="status" value="1" />
+                                                    <button type="submit" class="btn btn-primary btn-block btn-lg">
                                                         accept order
-                                                    </a>
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </div>
-                                    </c:forEach>
+                                                    </button>
+                                                </form>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
                                 </div>
 
                             </div>

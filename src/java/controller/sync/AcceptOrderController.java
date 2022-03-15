@@ -5,6 +5,7 @@
  */
 package controller.sync;
 
+import dao.AccountDAO;
 import dao.OrderDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +13,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.Account;
+import model.Order;
 
 /**
  *
@@ -57,9 +61,15 @@ public class AcceptOrderController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
         int orderId = Integer.parseInt(request.getParameter("orderId"));
         int status = Integer.parseInt(request.getParameter("status"));
-        new OrderDAO().updateStatusOrderByOrderId(orderId,status);
+        String email = request.getParameter("email");
+        
+        Order order = new OrderDAO().getAllOrdersByOrderId(orderId);
+        new OrderDAO().updateStatusOrderByOrderId(orderId, status);
+        new AccountDAO().SendEmailRefuseToCustomer(order, account, email);
         response.sendRedirect("see-detail?orderId=" + orderId);
     }
 
@@ -74,7 +84,17 @@ public class AcceptOrderController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+
+        int orderId = Integer.parseInt(request.getParameter("orderId"));
+        int status = Integer.parseInt(request.getParameter("status"));
+        String email = request.getParameter("email");
+
+        Order order = new OrderDAO().getAllOrdersByOrderId(orderId);
+        new OrderDAO().updateStatusOrderByOrderId(orderId, status);
+        new AccountDAO().SendEmailAcceptToCustomer(order, account, email);
+        response.sendRedirect("see-detail?orderId=" + orderId);
     }
 
     /**

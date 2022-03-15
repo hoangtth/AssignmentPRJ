@@ -5,7 +5,6 @@
  */
 package dao;
 
-
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
@@ -20,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Account;
 import model.Category;
+import model.Order;
 
 public class AccountDAO {
 
@@ -71,7 +71,9 @@ public class AccountDAO {
                         .address(rs.getString(5))
                         .email(rs.getString(6))
                         .phone(rs.getString(7))
-                        .role(rs.getString(8)).build();
+                        .role(rs.getString(8))
+                        .passEmail(rs.getString(9))
+                        .build();
                 return a;
             }
         } catch (Exception ex) {
@@ -89,9 +91,10 @@ public class AccountDAO {
                     + "           ,[address]\n"
                     + "           ,[email]\n"
                     + "           ,[phone]\n"
-                    + "           ,[role])\n"
+                    + "           ,[role]\n"
+                    + "           ,[passwordEmail])\n"
                     + "     VALUES\n"
-                    + "           (?,?,?,?,?,?,'USER')";
+                    + "           (?,?,?,?,?,?,'USER',?)";
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, a.getUsername());
@@ -100,6 +103,7 @@ public class AccountDAO {
             ps.setString(4, a.getAddress());
             ps.setString(5, a.getEmail());
             ps.setString(6, a.getPhone());
+            ps.setString(7, a.getPassEmail());
             ps.executeUpdate();
         } catch (Exception ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -226,27 +230,47 @@ public class AccountDAO {
         }
     }
 
-    public static void main(String[] args) {
-        String subject = "Your order has been processing.";
+    public void SendEmailAcceptToCustomer(Order order, Account accountAdmin, String emailCus) {
+        String subject = "Order Confirmation Notice";
         String message = "<!DOCTYPE html>\n"
                 + "<html lang=\"en\">\n"
                 + "\n"
                 + "<head>\n"
+                + " <meta charset=\"UTF-8\">\n"
                 + "</head>\n"
                 + "\n"
                 + "<body>\n"
+                + "    <h1 style=\"color: blue;\">Huy Hoang Watch</h1>\n"
                 + "    <h3 style=\"color: blue;\">Your order has been processing.</h3>\n"
-                + "    <div>Full Name :Le Hong Quan</div>\n"
-                + "    <div>Phone : 0866823499</div>\n"
-                + "    <div>address : Vinh Hung, Vinh Loc, Thanh Hoa</div>\n"
+                + "    <div>Full Name: " + order.getShipping().getName() + "</div>\n"
+                + "    <div>Phone :" + order.getShipping().getPhone() + "</div>\n"
+                + "    <div>address : " + order.getShipping().getAddress() + "</div>\n"
                 + "    <h3 style=\"color: blue;\">Thank you very much!</h3>\n"
                 + "\n"
                 + "</body>\n"
                 + "\n"
                 + "</html>";
-        AccountDAO.send("bibilove9876@gmail.com", subject, message, "hoangtthhe153437@fpt.edu.vn", "huyhoang");
-        //vd để gửi email tới "dich@gmail.com" bằng email "nguon@gmail.com" pass "123456"
-//        SendMail.send("dich@gmail.com", subject, message, "nguon@gmail.com", "123456");
+        AccountDAO.send(emailCus, subject, message, accountAdmin.getEmail(), accountAdmin.getPassEmail());
+    }
+
+    public void SendEmailRefuseToCustomer(Order order, Account accountAdmin, String emailCus) {
+        String subject = "Order Confirmation Notice";
+        String message = "<!DOCTYPE html>\n"
+                + "<html lang=\"en\">\n"
+                + "\n"
+                + "<head>\n"
+                + " <meta charset=\"UTF-8\">\n"
+                + "</head>\n"
+                + "\n"
+                + "<body>\n"
+                + "    <h1 style=\"color: blue;\">Huy Hoang Watch</h1>\n"
+                + "    <h3 style=\"color: red;\">Your order has been cancelled.</h3>\n"
+                + "    <h3 style=\"color: blue;\">Thank you very much!</h3>\n"
+                + "\n"
+                + "</body>\n"
+                + "\n"
+                + "</html>";
+        AccountDAO.send(emailCus, subject, message, accountAdmin.getEmail(), accountAdmin.getPassEmail());
     }
 
 }

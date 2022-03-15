@@ -60,7 +60,7 @@ public class Order {
         this.list = list;
     }
 
-    public Order(int id, int accountId, double totalPrice, String note, String createdDate, int shippingId, int status, Shipping shipping,Account account ,List<OrderDetail> list) {
+    public Order(int id, int accountId, double totalPrice, String note, String createdDate, int shippingId, int status, Shipping shipping, Account account, List<OrderDetail> list) {
         this.id = id;
         this.accountId = accountId;
         this.totalPrice = totalPrice;
@@ -72,8 +72,6 @@ public class Order {
         this.account = account;
         this.list = list;
     }
-    
-    
 
     public String getAccountName() {
         return accountName;
@@ -154,7 +152,13 @@ public class Order {
     public void setShipping(Shipping shipping) {
         this.shipping = shipping;
     }
-    
-    
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 
 }

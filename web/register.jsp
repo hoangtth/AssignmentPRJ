@@ -60,6 +60,11 @@
                             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                         </div>
                         <div class="form-group">
+                            <label for="password">Password Email</label>
+                            <input name="passEmail" type="password" class="form-control" id="exampleInputEmail1" required>
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your password with anyone else.</small>
+                        </div>
+                        <div class="form-group">
                             <label for="exampleInputEmail1">Address</label>
                             <input value="${address}" name="address" type="text" class="form-control" id="exampleInputEmail1" required>
                             <small id="emailHelp" class="form-text text-muted">We'll never share your address with anyone else.</small>
