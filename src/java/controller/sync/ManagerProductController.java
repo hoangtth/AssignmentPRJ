@@ -71,9 +71,8 @@ public class ManagerProductController extends HttpServlet {
             pageIndex = Integer.parseInt(raw_page);
         }
 
-        List<Product> listProduct = new ProductDAO().getAllPagging(pageIndex, PAGE_SIZE);
+        List<Product> listProduct = new ProductDAO().getAllPaggingCat(pageIndex, PAGE_SIZE);
         int totalPage = new ProductDAO().countPage(PAGE_SIZE);
-
         request.setAttribute("pageIndex", pageIndex);
         request.setAttribute("listProduct", listProduct);
         request.setAttribute("totalPage", totalPage);

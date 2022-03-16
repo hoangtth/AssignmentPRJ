@@ -60,6 +60,51 @@ public class ProductDAO {
         }
         return null;
     }
+    
+    
+     public List<Product> getAllPaggingCat(int pageIndex, int pageSize) {
+        try {
+            String query = "SELECT * FROM (\n"
+                    + "  SELECT Product.*, \n"
+                    + "    ROW_NUMBER() OVER (ORDER BY id ASC) AS RN\n"
+                    + "  FROM Product\n"
+                    + ") AS X\n"
+                    + "WHERE RN > ?*?-?\n"
+                    + "AND RN <= ?*?-?";
+
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, pageIndex);
+            ps.setInt(2, pageSize);
+            ps.setInt(3, pageSize);
+            ps.setInt(4, pageIndex + 1);
+            ps.setInt(5, pageSize);
+            ps.setInt(6, pageSize);
+            rs = ps.executeQuery();
+
+            List<Product> list = new ArrayList<>();
+            while (rs.next()) {
+                Category category = new CategoryDAO().getCategoryNameByCatId(rs.getInt(2));
+                Product P = new Product(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getInt(5),
+                        rs.getDouble(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        category);
+
+                list.add(P);
+            }
+            return list;
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return null;
+    }
+
 
     public int countPage(int pageSize) {
         try {

@@ -54,6 +54,7 @@
                             <th>Name of Product</th>
                             <th>Image</th>
                             <th>Price</th>
+                            <th>catName</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -64,6 +65,7 @@
                                 <td>${P.name}</td>
                                 <td><img style="width: 100px" class="card-img-top" src="${P.image}" alt=""></td>
                                 <td>${P.price}</td>
+                                <td>${P.category.categoryName}</td>
                                 <td>
                                     <div  class="d-flex">
                                         <a onclick="doDelete(${P.id})" href="#" class="btn bg-danger text-white" type="submit">Delete</a>

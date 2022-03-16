@@ -7,7 +7,6 @@ package model;
 
 import java.sql.Date;
 
-
 public class Product {
 
     private int id;
@@ -19,6 +18,7 @@ public class Product {
     private String description;
     private String image;
     private Date createDate;
+    private Category category;
 
     public Product() {
     }
@@ -33,6 +33,20 @@ public class Product {
         this.description = description;
         this.image = image;
         this.createDate = createDate;
+    }
+    
+    
+
+    public Product(int id, int categoryId, String code, String name, int quantity, double price, String description, String image, Category category) {
+        this.id = id;
+        this.categoryId = categoryId;
+        this.code = code;
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+        this.description = description;
+        this.image = image;
+        this.category = category;
     }
 
     public int getId() {
@@ -107,9 +121,14 @@ public class Product {
         this.createDate = createDate;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" + "id=" + id + ", categoryId=" + categoryId + ", code=" + code + ", name=" + name + ", quantity=" + quantity + ", price=" + price + ", description=" + description + ", image=" + image + ", createDate=" + createDate + '}';
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
     
+   
+
 }

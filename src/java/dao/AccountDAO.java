@@ -221,7 +221,7 @@ public class AccountDAO {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             message.setSubject(sub);
             message.setContent(msg, "text/html");
-
+            
             /* Transport class is used to deliver the message to the recipients */
             Transport.send(message);
 

@@ -18,6 +18,7 @@ import model.Category;
  * @author ThinkPro
  */
 public class CategoryDAO {
+
     Connection conn;
     PreparedStatement ps;
     ResultSet rs;
@@ -36,6 +37,24 @@ public class CategoryDAO {
                 list.add(C);
             }
             return list;
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return null;
+    }
+
+    public Category getCategoryNameByCatId(int categoryID) {
+        try {
+            String query = "select * from category where id= ?";
+
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, categoryID);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return new Category(rs.getInt(1), rs.getString(2), rs.getInt(3));
+            }
         } catch (Exception ex) {
             ex.printStackTrace(System.out);
         }
